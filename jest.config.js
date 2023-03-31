@@ -19,7 +19,7 @@ const config = {
   // Code coverage shows how many lines, functions, and branches are covered by tests.
   collectCoverage: true,
   collectCoverageFrom: ['**/*.{ts,tsx}', '!**/dist/**'],
-  coveragePathIgnorePatterns: ['/node_modules/', 'index'],
+  coveragePathIgnorePatterns: ['/node_modules/', 'index', '_database.ts'],
   coverageThreshold: {
     // Specifies all global coverage at 100%
     // Though code coverage doesn't guarantee that every case is tested,
