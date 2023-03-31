@@ -16,7 +16,9 @@ export type {{ name.pascalCase }}Props = React.PropsWithChildren<{
 function {{ name.pascalCase }}(
   props: {{ name.pascalCase }}Props
 ): React.ReactElement<{{ name.pascalCase }}Props> | null {
-  return <div className="{{ name.kebabCase }}">{props.children}</div>;
+  const { children } = props;
+
+  return <div className="{{ name.kebabCase }}">{children}</div>;
 }
 
 export default {{ name.pascalCase }};

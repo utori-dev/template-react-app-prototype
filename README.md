@@ -20,7 +20,36 @@ It includes the following dependencies:
 This template is ideal for prototypes,
 but includes more dependencies that are likely needed for your individual use case.
 
+This template is quite restrictive to encourage good practices, even while prototyping.
+Feel free to remove these restrictions if you decide they are unnecessary.
+
+## Structure
+
+### `store/`
+
+This directory manages the app state.
+It exports utilities to interact with the app state and
+it should be the only directory to know about the store's implementation.
+
+### `ui/`
+
+This is for presentational components.
+It should not import any utilities from `views/` or `store/`.
+It should also not know about the routes.
+
+### `views/`
+
+This is for connected and routed components.
+It can import from `ui/` and `store/` as needed.
+Components in this directory will likely know about the current routing.
+
 ## Scripts
+
+### Generate: `npm run generate:<type> -- [name]`
+
+To generate new code, run `npm run generate:ui -- foo-bar` or `npm run generate:view -- foo-bar`.
+
+The generated code will be in `src/ui/` or `src/views/`.
 
 ### Build: `npm run build`
 

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const Mustache = require('mustache');
 const fs = require('fs/promises');
 const path = require('path');
@@ -69,7 +71,7 @@ require('yargs')
         kebabCase: nameKebabCase,
       };
 
-      const templates = await loadTemplates('Component', { recursive: true });
+      const templates = await loadTemplates('Component');
 
       const componentPath = path.join(
         PACKAGE_ROOT,
@@ -78,7 +80,7 @@ require('yargs')
         namePascalCase
       );
 
-      await fs.mkdir(componentPath);
+      await fs.mkdir(componentPath, { recursive: true });
 
       await Promise.all(
         templates.map((template) =>
