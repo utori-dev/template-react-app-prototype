@@ -69,7 +69,7 @@ require('yargs')
         kebabCase: nameKebabCase,
       };
 
-      const templates = await loadTemplates('Component');
+      const templates = await loadTemplates('Component', { recursive: true });
 
       const componentPath = path.join(
         PACKAGE_ROOT,
@@ -87,6 +87,59 @@ require('yargs')
               componentPath,
               template.name
                 .replace('Component', namePascalCase)
+                .replace(/\.mustache$/, '')
+            ),
+            Mustache.render(template.content, { name, description })
+          )
+        )
+      );
+
+      console.log(`Successfully created ${namePascalCase}`);
+    },
+  })
+  .command('view [name]', 'Generates a new view', {
+    builder: (yargs) => {
+      yargs.positional('name', {
+        describe: 'The name of the view.',
+        type: 'string',
+        require: true,
+        coerce: toPascalCase,
+      });
+      yargs.option('description', {
+        describe: 'Description of the view. Will be used for JSDocs.',
+        alias: 'd',
+        type: 'string',
+        default: '@todo Add description',
+        require: false,
+      });
+    },
+    handler: async (args) => {
+      const { name: namePascalCase, description } = args;
+      const nameKebabCase = `view-${kebabCase(namePascalCase)}`;
+
+      const name = {
+        pascalCase: namePascalCase,
+        kebabCase: nameKebabCase,
+      };
+
+      const templates = await loadTemplates('View');
+
+      const componentPath = path.join(
+        PACKAGE_ROOT,
+        'src',
+        'views',
+        namePascalCase
+      );
+
+      await fs.mkdir(componentPath, { recursive: true });
+
+      await Promise.all(
+        templates.map((template) =>
+          fs.writeFile(
+            path.join(
+              componentPath,
+              template.name
+                .replace('View', namePascalCase)
                 .replace(/\.mustache$/, '')
             ),
             Mustache.render(template.content, { name, description })

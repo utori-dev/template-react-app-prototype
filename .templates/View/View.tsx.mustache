@@ -1,0 +1,22 @@
+import * as React from 'react';
+
+/**
+ * Props for the {{ name.pascalCase }}
+ */
+export type {{ name.pascalCase }}Props = React.PropsWithChildren<{
+  // Your props here!
+}>;
+
+/**
+ * {{ description }}
+ *
+ * @param props
+ * @returns
+ */
+function {{ name.pascalCase }}(
+  props: {{ name.pascalCase }}Props
+): React.ReactElement<{{ name.pascalCase }}Props> | null {
+  return <div className="{{ name.kebabCase }}">{props.children}</div>;
+}
+
+export default {{ name.pascalCase }};

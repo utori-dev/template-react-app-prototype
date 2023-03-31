@@ -7,6 +7,7 @@
     "build": "webpack --mode production",
     "format": "prettier **/** --write",
     "generate:ui": "node ./.templates/generate.cjs component",
+    "generate:view": "node ./.templates/generate.cjs view",
     "lint": "eslint src/** --ext .js,.jsx,.ts,.tsx",
     "start": "webpack serve --mode development",
     "start:production": "webpack serve --mode production",
