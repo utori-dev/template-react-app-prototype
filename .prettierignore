@@ -9,5 +9,10 @@ coverage
 
 # Project Files
 .prettierignore
+.eslintignore
 .gitignore
 LICENSE
+
+# Files
+*.ico
+*.png

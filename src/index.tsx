@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -7,8 +8,18 @@ import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
 
-const container = document.getElementById('app');
-const root = createRoot(container!);
+const container = document.getElementById('app') as HTMLElement;
+
+const root = createRoot(container);
 root.render(<App />);
 
-window.addEventListener('load', registerServiceWorker);
+window.addEventListener('load', () => {
+  registerServiceWorker().then(
+    () => {
+      console.debug('Service Worker succesfully registered.');
+    },
+    (error) => {
+      console.error('Error during Service Worker registration:', error);
+    }
+  );
+});

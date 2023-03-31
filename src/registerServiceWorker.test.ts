@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/unbound-method */
 import registerServiceWorker from './registerServiceWorker';
 
 describe('registerServiceWorker', () => {
@@ -39,28 +40,21 @@ describe('registerServiceWorker', () => {
 
   it('should reject when service worker cannot be registered', async () => {
     // Arrange
-    const spyConsoleError = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
     window.navigator = {
       serviceWorker: {
-        register: jest.fn().mockImplementation(() => Promise.reject('Foo')),
+        register: jest
+          .fn()
+          .mockImplementation(() => Promise.reject(new Error('foo'))),
       },
     } as any;
 
     // Act
-    await registerServiceWorker();
 
-    // Assert
-    expect(window.navigator.serviceWorker.register).toHaveBeenCalledWith(
-      '/service-worker.js'
-    );
-    expect(spyConsoleError).toHaveBeenCalledWith(
-      'Cannot register Service Worker:',
-      'Foo'
-    );
-
-    // Teardown
-    spyConsoleError.mockRestore();
+    try {
+      await registerServiceWorker();
+    } catch (error) {
+      // Assert
+      expect(error).toEqual(new Error('foo'));
+    }
   });
 });

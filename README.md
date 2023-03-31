@@ -1,17 +1,24 @@
 # Simple React App Template
 
-Starter React app with TypeScript and development dependencies.
+Starter React app with TypeScript and several helpful dependencies.
 
-This template is ideal for learning projects and simple prototypes:
+This template is intended for prototype apps.
 
-- Intended to be easily understood by beginners to web development.
-- Commented configuration files to aid in learning.
-- Minimal dependencies to reduce complexity and abstractions.
+It includes the following dependencies:
 
-This template is not an ideal starting point for most production web apps.
-To encourage learning and reduce abstractions, only essential dependencies were added.
-Many common dependencies are useful for preventing bugs, increasing speed of development,
-reducing maintenance requirements, and improving readability.
+- [Dexie][dexie] (rather than Redux) for state management.
+  - Dexie uses IndexedDB, so state is persisted.
+  - Makes prototype development easier, since there may not be a backend at first.
+- [Lodash][lodash] for generic utilities.
+- [Luxon][luxon] for managing dates.
+  - Recommended successor to the Moment.
+- [Material UI][mui] for UI components.
+  - Material UI is one of the most complete UI component libraries available.
+- [Type Fest][type-fest] for useful TypeScript types.
+- [React Router][react-router] for routing.
+
+This template is ideal for prototypes,
+but includes more dependencies that are likely needed for your individual use case.
 
 ## Scripts
 
@@ -72,8 +79,14 @@ Before getting started, you will need [Git] and [Node.js].
 You are now ready to start coding!
 
 [babel]: https://babeljs.io/
-[generate]: https://github.com/utori-dev/template-react-app/generate
+[dexie]: https://dexie.org/
+[generate]: https://github.com/utori-dev/template-react-app-prototype/generate
 [git]: https://git-scm.com/
 [github_docs_git]: https://docs.github.com/en/get-started/quickstart/set-up-git
+[lodash]: https://lodash.com/
+[luxon]: https://lodash.com/
+[mui]: https://mui.com/material-ui/getting-started/installation/
 [node.js]: https://nodejs.org/
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
+[react-router]: https://reactrouter.com/en/main
+[type-fest]: https://github.com/sindresorhus/type-fest
