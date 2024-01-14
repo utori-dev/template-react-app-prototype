@@ -3,22 +3,31 @@
 Starter React app with TypeScript and several helpful dependencies.
 
 This template is intended for prototype apps.
+With that said, it has a large amount of dependencies to get you off the ground quickly.
 
-It includes the following dependencies:
+This prototype comes with the following dependencies:
 
-- [Dexie][dexie] (rather than Redux) for state management.
+- [Dexie][dexie] for persistent state management.
   - Dexie uses IndexedDB, so state is persisted.
   - Makes prototype development easier, since there may not be a backend at first.
+  - Easily query the data.
+  - Not ideal for theming, configuration, or page-specific state, so Redux is still included.
+- [clsx][clsx] for class name creation.
+- [Emotion][emotion] for UI components.
+  - Allows you to easily design and style components.
+- [Floating UI][floating-ui] for creating tooltips, dialogs, etc.
+  - Replacement of the Popper library.
 - [Lodash][lodash] for generic utilities.
 - [Luxon][luxon] for managing dates.
   - Recommended successor to the Moment.
-- [Material UI][mui] for UI components.
-  - Material UI is one of the most complete UI component libraries available.
 - [Type Fest][type-fest] for useful TypeScript types.
 - [React Router][react-router] for routing.
+- [Redux Toolkit][rtk] for page-specific state, theming, and configuration settings.
+- [usehooks-ts][usehooks-ts] for useful hooks to help in a variety of situations.
 
 This template is ideal for prototypes,
 but includes more dependencies that are likely needed for your individual use case.
+It's a good idea to review these dependencies and remove any you find unnecessary.
 
 This template is quite restrictive to encourage good practices, even while prototyping.
 Feel free to remove these restrictions if you decide they are unnecessary.
@@ -109,13 +118,17 @@ You are now ready to start coding!
 
 [babel]: https://babeljs.io/
 [dexie]: https://dexie.org/
+[clsx]: https://www.npmjs.com/package/clsx
+[emotion]: https://emotion.sh/docs/introduction
+[floating-ui]: https://floating-ui.com/
 [generate]: https://github.com/utori-dev/template-react-app-prototype/generate
 [git]: https://git-scm.com/
 [github_docs_git]: https://docs.github.com/en/get-started/quickstart/set-up-git
 [lodash]: https://lodash.com/
 [luxon]: https://lodash.com/
-[mui]: https://mui.com/material-ui/getting-started/installation/
 [node.js]: https://nodejs.org/
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
 [react-router]: https://reactrouter.com/en/main
+[rtk]: https://redux-toolkit.js.org/
 [type-fest]: https://github.com/sindresorhus/type-fest
+[usehooks-ts]: https://usehooks-ts.com/
