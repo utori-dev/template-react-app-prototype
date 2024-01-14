@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "deploy": "gh-pages -d dist",
     "format": "prettier **/** --write",
     "generate:ui": "node ./.templates/generate.cjs component",
     "generate:view": "node ./.templates/generate.cjs view",
