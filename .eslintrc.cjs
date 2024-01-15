@@ -9,6 +9,14 @@ module.exports = {
   ],
   rules: {
     'no-restricted-exports': 'off',
+    // With TypeScript, this is less necessary. Since this isn't a library, we don't need to worry about JS-only usage.
+    'react/prop-types': 'off',
+    // Forwarding props is convenient when creating basic components used elsewhere.
+    'react/jsx-props-no-spreading': 'off',
+    // Declaring components as constants makes it easier to specify custom component types.
+    'react/function-component-definition': 'off',
+    // These can be defined during props destructuring. For example: { foo = 'value ' } = props;
+    'react/require-default-props': 'off',
   },
   overrides: [
     {
