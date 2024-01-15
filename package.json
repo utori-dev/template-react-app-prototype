@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "clean": "rimraf .cache .tmp lib dist build",
     "deploy": "gh-pages -d dist",
     "format": "prettier **/** --write",
     "generate:ui": "node ./.templates/generate.cjs component",
@@ -79,6 +80,7 @@
     "mustache": "^4.2.0",
     "prettier": "^2.6.2",
     "react-test-renderer": "^18.2.0",
+    "rimraf": "^5.0.5",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "webpack": "^5.72.1",
