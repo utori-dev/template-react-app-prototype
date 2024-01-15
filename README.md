@@ -49,7 +49,7 @@ It should not import any utilities from `views/` or `store/` or know anything ab
 
 This is for connected and routed components.
 It can import from `ui/` and `store/` as needed.
-Components in this directory will likely be tied to routes, such as pages.
+Components in this directory will often be tied to routes, such as pages.
 
 ## Scripts
 
