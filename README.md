@@ -42,15 +42,14 @@ it should be the only directory to know about the store's implementation.
 
 ### `ui/`
 
-This is for presentational components.
-It should not import any utilities from `views/` or `store/`.
-It should also not know about the routes.
+This is for presentational building block components.
+It should not import any utilities from `views/` or `store/` or know anything about routes.
 
 ### `views/`
 
 This is for connected and routed components.
 It can import from `ui/` and `store/` as needed.
-Components in this directory will likely know about the current routing.
+Components in this directory will often be tied to routes, such as pages.
 
 ## Scripts
 

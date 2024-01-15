@@ -3,9 +3,7 @@ import * as React from 'react';
 /**
  * Props for the {{ name.pascalCase }}
  */
-export type {{ name.pascalCase }}Props = React.PropsWithChildren<{
-  // Your props here!
-}>;
+export type {{ name.pascalCase }}Props = React.HTMLAttributes<HTMLDivElement>;
 
 /**
  * {{ description }}
@@ -13,12 +11,10 @@ export type {{ name.pascalCase }}Props = React.PropsWithChildren<{
  * @param props
  * @returns
  */
-function {{ name.pascalCase }}(
-  props: {{ name.pascalCase }}Props
-): React.ReactElement<{{ name.pascalCase }}Props> | null {
-  const { children } = props;
+const {{ name.pascalCase }}: React.FC<{{ name.pascalCase }}Props> = (props) => {
+  const { /* extract custom props here */ ...forwardedProps } = props;
 
-  return <div className="{{ name.kebabCase }}">{children}</div>;
+  return <div {...forwardedProps} />;
 }
 
 export default {{ name.pascalCase }};
