@@ -43,12 +43,11 @@ it should be the only directory to know about the store's implementation.
 ### `ui/`
 
 This is for presentational building block components.
-Some components in the `ui/` directory should potentially connect to the store or routes,
-but in general they should be reusable and relatively isolated from the state.
+It should not import any utilities from `views/` or `store/` or the know anything about routes.
 
 ### `views/`
 
-This is for routed and connected components.
+This is for connected and routed components.
 It can import from `ui/` and `store/` as needed.
 Components in this directory will likely be tied to routes, such as pages.
 
