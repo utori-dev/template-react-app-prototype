@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
+    "deploy": "gh-pages -d dist",
     "format": "prettier **/** --write",
     "generate:ui": "node ./.templates/generate.cjs component",
     "generate:view": "node ./.templates/generate.cjs view",
@@ -70,6 +71,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "gh-pages": "^6.1.1",
     "jest": "^28.1.3",
     "jest-environment-jsdom": "^28.1.0",
     "jest-transform-stub": "^2.0.0",
