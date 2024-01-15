@@ -43,7 +43,7 @@ it should be the only directory to know about the store's implementation.
 ### `ui/`
 
 This is for presentational building block components.
-It should not import any utilities from `views/` or `store/` or the know anything about routes.
+It should not import any utilities from `views/` or `store/` or know anything about routes.
 
 ### `views/`
 
