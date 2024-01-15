@@ -60,6 +60,16 @@ To generate new code, run `npm run generate:ui -- foo-bar` or `npm run generate:
 
 The generated code will be in `src/ui/` or `src/views/`.
 
+### Deploy to GitHub Pages: `npm run deploy`
+
+To deploy to GitHub Pages, run `npm run deploy`.
+
+This will publish the contents of the `dist/` directory to the `gh-pages` branch.
+Remember to run `npm run build` first!
+
+You may need to configure the settings of your repository to make GitHub Pages work correctly.
+To learn more, [read the official GitHub guide on configuring a publishing source](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
+
 ### Build: `npm run build`
 
 To build the app, run `npm run build`.
