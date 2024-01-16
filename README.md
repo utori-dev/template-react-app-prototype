@@ -22,7 +22,7 @@ This prototype comes with the following dependencies:
   - Recommended successor to the Moment.
 - [Type Fest][type-fest] for useful TypeScript types.
 - [React Router][react-router] for routing.
-- [Redux Toolkit][rtk] for page-specific state, theming, and configuration settings.
+- [Redux Toolkit][redux-toolkit] for page-specific state, theming, and configuration settings.
 - [usehooks-ts][usehooks-ts] for useful hooks to help in a variety of situations.
 
 This template is ideal for prototypes,
@@ -143,6 +143,6 @@ You are now ready to start coding!
 [node.js]: https://nodejs.org/
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
 [react-router]: https://reactrouter.com/en/main
-[rtk]: https://redux-toolkit.js.org/
+[redux-toolkit]: https://redux-toolkit.js.org/
 [type-fest]: https://github.com/sindresorhus/type-fest
 [usehooks-ts]: https://usehooks-ts.com/
