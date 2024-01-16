@@ -23,6 +23,7 @@ This prototype comes with the following dependencies:
 - [Type Fest][type-fest] for useful TypeScript types.
 - [React Router][react-router] for routing.
 - [Redux Toolkit][redux-toolkit] for page-specific state, theming, and configuration settings.
+- [Rimraf][rimraf] The UNIX command `rm -rf` for node.
 - [usehooks-ts][usehooks-ts] for useful hooks to help in a variety of situations.
 
 This template is ideal for prototypes,
@@ -44,9 +45,8 @@ This is where both the Dexie database and Redux store lives.
 
 ### `ui/`
 
-This is for presentational components.
-It should not import any utilities from `views/` or `store/`.
-It should also not know about the routes.
+This is for presentational building block components.
+It should not import any utilities from `views/` or `store/` or know anything about routes.
 
 This is where icon components and Emotion styles also live.
 
@@ -54,7 +54,7 @@ This is where icon components and Emotion styles also live.
 
 This is for connected and routed components.
 It can import from `ui/` and `store/` as needed.
-Components in this directory will likely know about the current routing.
+Components in this directory will often be tied to routes, such as pages.
 
 ## Scripts
 
@@ -79,6 +79,10 @@ To learn more, [read the official GitHub guide on configuring a publishing sourc
 To build the app, run `npm run build`.
 
 The generated output will be in the `dist/` directory.
+
+### Clean: `npm run clean`
+
+To clean `.cache`, `.tmp`, `lib`, `dist`, and `build` files and directories.
 
 ### Format: `npm run format`
 
@@ -144,5 +148,6 @@ You are now ready to start coding!
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
 [react-router]: https://reactrouter.com/en/main
 [redux-toolkit]: https://redux-toolkit.js.org/
+[rimraf]: https://www.npmjs.com/package/rimraf
 [type-fest]: https://github.com/sindresorhus/type-fest
 [usehooks-ts]: https://usehooks-ts.com/

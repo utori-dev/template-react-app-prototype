@@ -18,6 +18,17 @@ function toPascalCase(value) {
 }
 
 /**
+ * Converts a string value to PascalCase.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function toViewName(value) {
+  const pascalCase = toPascalCase(value);
+  return pascalCase.endsWith('View') ? pascalCase : `${pascalCase}View`;
+}
+
+/**
  * Loads the specified template.
  * Ignores sub-directories within the template.
  *
@@ -106,7 +117,7 @@ require('yargs')
         describe: 'The name of the view.',
         type: 'string',
         require: true,
-        coerce: toPascalCase,
+        coerce: toViewName,
       });
       yargs.option('description', {
         describe: 'Description of the view. Will be used for JSDocs.',

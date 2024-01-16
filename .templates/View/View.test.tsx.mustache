@@ -3,15 +3,12 @@ import * as renderer from 'react-test-renderer';
 import {{ name.pascalCase }} from './{{ name.pascalCase }}';
 
 describe('{{ name.pascalCase }}', () => {
-  it('should match snapshot', () => {
+  // Dummy test to get you started
+  it('should render without errors', () => {
     // Act
     const tree = renderer.create(<{{ name.pascalCase }} />).toJSON();
 
     // Assert
-    expect(tree).toMatchInlineSnapshot(`
-      <div
-        className="{{ name.kebabCase }}"
-      />
-    `);
+    expect(tree).toBeTruthy();
   });
 });
