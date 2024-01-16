@@ -132,13 +132,8 @@ require('yargs')
 
       const templates = await loadTemplates('Component');
 
-      const componentPath = path.join(
-        PACKAGE_ROOT,
-        'src',
-        'ui',
-        'components',
-        namePascalCase
-      );
+      const directory = path.join(PACKAGE_ROOT, 'src', 'ui', 'components');
+      const componentPath = path.join(directory, namePascalCase);
 
       await fs.mkdir(componentPath, { recursive: true });
 
@@ -155,6 +150,8 @@ require('yargs')
           )
         )
       );
+
+      await generateIndexFile(directory);
 
       console.log(`Successfully created ${namePascalCase}`);
     },
@@ -187,8 +184,6 @@ require('yargs')
       const templates = await loadTemplates('Icon');
 
       const directory = path.join(PACKAGE_ROOT, 'src', 'ui', 'icons');
-
-      const filePath = path.join(directory, namePascalCase);
 
       await Promise.all(
         templates.map((template) =>
