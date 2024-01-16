@@ -288,12 +288,8 @@ require('yargs')
 
       const templates = await loadTemplates('View');
 
-      const componentPath = path.join(
-        PACKAGE_ROOT,
-        'src',
-        'views',
-        namePascalCase
-      );
+      const directory = path.join(PACKAGE_ROOT, 'src', 'views');
+      const componentPath = path.join(directory, namePascalCase);
 
       await fs.mkdir(componentPath, { recursive: true });
 
@@ -310,6 +306,8 @@ require('yargs')
           )
         )
       );
+
+      await generateIndexFile(directory);
 
       console.log(`Successfully created ${namePascalCase}`);
     },
