@@ -23,6 +23,7 @@ This prototype comes with the following dependencies:
 - [Type Fest][type-fest] for useful TypeScript types.
 - [React Router][react-router] for routing.
 - [Redux Toolkit][rtk] for page-specific state, theming, and configuration settings.
+- [Rimraf][rimraf] The UNIX command `rm -rf` for node.
 - [usehooks-ts][usehooks-ts] for useful hooks to help in a variety of situations.
 
 This template is ideal for prototypes,
@@ -74,6 +75,10 @@ To learn more, [read the official GitHub guide on configuring a publishing sourc
 To build the app, run `npm run build`.
 
 The generated output will be in the `dist/` directory.
+
+### Clean: `npm run clean`
+
+To clean `.cache`, `.tmp`, `lib`, `dist`, and `build` files and directories.
 
 ### Format: `npm run format`
 
@@ -139,5 +144,6 @@ You are now ready to start coding!
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
 [react-router]: https://reactrouter.com/en/main
 [rtk]: https://redux-toolkit.js.org/
+[rimraf]: https://www.npmjs.com/package/rimraf
 [type-fest]: https://github.com/sindresorhus/type-fest
 [usehooks-ts]: https://usehooks-ts.com/
