@@ -18,7 +18,7 @@ function toPascalCase(value) {
 }
 
 /**
- * Converts a string value to PascalCase.
+ * Converts a string value to PascalCase and appends `*View` if it's not already appended.
  *
  * @param {string} value
  * @returns {string}
@@ -26,6 +26,54 @@ function toPascalCase(value) {
 function toViewName(value) {
   const pascalCase = toPascalCase(value);
   return pascalCase.endsWith('View') ? pascalCase : `${pascalCase}View`;
+}
+
+/**
+ * Converts a string value to PascalCase and appends `*Icon` if it's not already appended.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function toIconName(value) {
+  const pascalCase = toPascalCase(value);
+  return pascalCase.endsWith('Icon') ? pascalCase : `${pascalCase}Icon`;
+}
+
+/**
+ * Generates an index file for the specified directory.
+ *
+ * @param {string} directory
+ * @returns {Promise<void>}
+ */
+async function generateIndexFile(directory) {
+  const items = await fs.readdir(directory, {
+    withFileTypes: true,
+  });
+
+  const filteredItems = items.filter((item) => {
+    if (item.name.startsWith('index.ts')) return false;
+    if (item.name.includes('.test.')) return false;
+    if (item.name.startsWith('_')) return false;
+    return true;
+  });
+
+  const exports = await Promise.all(
+    filteredItems.map((item) => {
+      const exportName = path.parse(item.name).name;
+      return [
+        `export * from './${exportName}';`,
+        `export { default as ${exportName} } from './${exportName}';`,
+      ].join('\n');
+    })
+  );
+
+  const content = ['// AUTO-GENERATED, DO NOT EDIT', '', ...exports, ''].join(
+    '\n'
+  );
+
+  return fs.writeFile(path.join(directory, 'index.ts'), content, {
+    encoding: 'utf-8',
+  });
 }
 
 /**
@@ -107,6 +155,56 @@ require('yargs')
           )
         )
       );
+
+      console.log(`Successfully created ${namePascalCase}`);
+    },
+  })
+  .command('icon [name]', 'Generates a new React icon component', {
+    builder: (yargs) => {
+      yargs.positional('name', {
+        describe: 'The name of the icon.',
+        type: 'string',
+        require: true,
+        coerce: toIconName,
+      });
+      yargs.option('description', {
+        describe: 'Description of the icon. Will be used for JSDocs.',
+        alias: 'd',
+        type: 'string',
+        default: '@todo Add description',
+        require: false,
+      });
+    },
+    handler: async (args) => {
+      const { name: namePascalCase, description } = args;
+      const nameKebabCase = kebabCase(namePascalCase);
+
+      const name = {
+        pascalCase: namePascalCase,
+        kebabCase: nameKebabCase,
+      };
+
+      const templates = await loadTemplates('Icon');
+
+      const directory = path.join(PACKAGE_ROOT, 'src', 'ui', 'icons');
+
+      const filePath = path.join(directory, namePascalCase);
+
+      await Promise.all(
+        templates.map((template) =>
+          fs.writeFile(
+            path.join(
+              directory,
+              template.name
+                .replace('Icon', namePascalCase)
+                .replace(/\.mustache$/, '')
+            ),
+            Mustache.render(template.content, { name, description })
+          )
+        )
+      );
+
+      await generateIndexFile(directory);
 
       console.log(`Successfully created ${namePascalCase}`);
     },

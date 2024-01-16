@@ -8,6 +8,7 @@
     "clean": "rimraf .cache .tmp lib dist build",
     "deploy": "gh-pages -d dist",
     "format": "prettier **/** --write",
+    "generate:icon": "node ./.templates/generate.cjs icon",
     "generate:ui": "node ./.templates/generate.cjs component",
     "generate:view": "node ./.templates/generate.cjs view",
     "lint": "eslint src/** --ext .js,.jsx,.ts,.tsx",
