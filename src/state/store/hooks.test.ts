@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import { useDialogData, useDialogIsOpen, useThemeMode } from './hooks';
 import {
   closeDialog,
@@ -13,7 +13,7 @@ describe('data/store/hooks', () => {
   describe('useThemeMode', () => {
     it('should return current theme mode', () => {
       // Arrange
-      setThemeMode('light');
+      act(() => setThemeMode('light'));
 
       // Act
       const { result, rerender } = renderHook(() => useThemeMode());
@@ -22,14 +22,14 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe('light');
 
       // Act
-      toggleThemeMode();
+      act(() => toggleThemeMode());
       rerender();
 
       // Assert
       expect(result.current).toBe('dark');
 
       // Teardown
-      setThemeMode('light');
+      act(() => setThemeMode('light'));
     });
   });
 
@@ -46,14 +46,14 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe(false);
 
       // Act
-      openDialog({ key, data });
+      act(() => openDialog({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toBe(true);
 
       // Teardown
-      closeDialog();
+      act(() => closeDialog());
     });
   });
 
@@ -69,24 +69,24 @@ describe('data/store/hooks', () => {
       expect(result.current).toBeNull();
 
       // Act
-      openDialog({ key, data });
+      act(() => openDialog({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toEqual(data);
 
       // Change data to new value
-      openDialog({ key, data: next });
+      act(() => openDialog({ key, data: next }));
       rerender();
       expect(result.current).toBe(next);
 
       // Verify data remains unchanged when given equivalent data.
-      openDialog({ key, data: { hola: 'mundo' } });
+      act(() => openDialog({ key, data: { hola: 'mundo' } }));
       rerender();
       expect(result.current).toBe(next);
 
       // Teardown
-      closeDialog();
+      act(() => closeDialog());
     });
   });
 });
