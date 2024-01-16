@@ -22,7 +22,7 @@ This prototype comes with the following dependencies:
   - Recommended successor to the Moment.
 - [Type Fest][type-fest] for useful TypeScript types.
 - [React Router][react-router] for routing.
-- [Redux Toolkit][rtk] for page-specific state, theming, and configuration settings.
+- [Redux Toolkit][redux-toolkit] for page-specific state, theming, and configuration settings.
 - [Rimraf][rimraf] The UNIX command `rm -rf` for node.
 - [usehooks-ts][usehooks-ts] for useful hooks to help in a variety of situations.
 
@@ -35,16 +35,20 @@ Feel free to remove these restrictions if you decide they are unnecessary.
 
 ## Structure
 
-### `store/`
+### `state/`
 
 This directory manages the app state.
 It exports utilities to interact with the app state and
 it should be the only directory to know about the store's implementation.
 
+This is where both the Dexie database and Redux store lives.
+
 ### `ui/`
 
 This is for presentational building block components.
 It should not import any utilities from `views/` or `store/` or know anything about routes.
+
+This is where icon components and Emotion styles also live.
 
 ### `views/`
 
@@ -143,7 +147,7 @@ You are now ready to start coding!
 [node.js]: https://nodejs.org/
 [node_docs_install]: https://nodejs.dev/learn/how-to-install-nodejs
 [react-router]: https://reactrouter.com/en/main
-[rtk]: https://redux-toolkit.js.org/
+[redux-toolkit]: https://redux-toolkit.js.org/
 [rimraf]: https://www.npmjs.com/package/rimraf
 [type-fest]: https://github.com/sindresorhus/type-fest
 [usehooks-ts]: https://usehooks-ts.com/
