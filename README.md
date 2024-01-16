@@ -46,23 +46,53 @@ This is where both the Dexie database and Redux store lives.
 ### `ui/`
 
 This is for presentational building block components.
-It should not import any utilities from `views/` or `store/` or know anything about routes.
+It should not import any utilities from `views/` or `state/` or know anything about routes.
 
-This is where icon components and Emotion styles also live.
+#### `components/`
+
+This is for React components that are not tied to the state.
+This directory may include things like buttons, cards, tooltips, etc.
+
+#### `emotion/`
+
+This is for Emotion styles that may be shared between components.
+
+This directory may include things like typography styles, error color styling, etc.
+
+#### `icons/`
+
+This is for React icon components.
+
+Components generated here will use the `SvgIcon` component.
 
 ### `views/`
 
 This is for connected and routed components.
-It can import from `ui/` and `store/` as needed.
+It can import from `ui/` and `state/` as needed.
+
 Components in this directory will often be tied to routes, such as pages.
 
 ## Scripts
 
 ### Generate: `npm run generate:<type> -- [name]`
 
-To generate new code, run `npm run generate:ui -- foo-bar` or `npm run generate:view -- foo-bar`.
+To generate new code, run one of the following:
 
-The generated code will be in `src/ui/` or `src/views/`.
+- `npm run generate:component -- foo-bar`
+  - Generates a generic UI component under `src/ui/components/`
+  - Updates `src/ui/components/index.ts`
+- `npm run generate:emotion -- foo-bar`
+  - Generates an Emotion styles file under `src/ui/emotion/`
+  - Updates `src/ui/emotion/index.ts`
+- `npm run generate:icon -- foo-bar`
+  - Generates a React icon component under `src/ui/icons/`
+  - Appends `*Icon` to the name of the component
+  - Updates `src/ui/icons/index.ts`
+- `npm run generate:view -- foo-bar`
+  - Generates a view component under `src/views/`
+  - Appends `*View` to the name of the component
+
+Read about the structure to learn more about the different components and code.
 
 ### Deploy to GitHub Pages: `npm run deploy`
 
