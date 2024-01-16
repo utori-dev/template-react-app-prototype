@@ -134,7 +134,6 @@ Before getting started, you will need [Git] and [Node.js].
 
 You are now ready to start coding!
 
-[babel]: https://babeljs.io/
 [dexie]: https://dexie.org/
 [clsx]: https://www.npmjs.com/package/clsx
 [emotion]: https://emotion.sh/docs/introduction
