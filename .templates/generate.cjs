@@ -3,7 +3,12 @@
 const Mustache = require('mustache');
 const fs = require('fs/promises');
 const path = require('path');
-const { words, capitalize, kebabCase } = require('lodash');
+const {
+  words,
+  capitalize,
+  kebabCase,
+  camelCase: toCamelCase,
+} = require('lodash');
 
 const PACKAGE_ROOT = path.dirname(__dirname);
 
@@ -43,9 +48,13 @@ function toIconName(value) {
  * Generates an index file for the specified directory.
  *
  * @param {string} directory
+ * @param {object} options
+ * @param {boolean} options.defaultExportOnly
  * @returns {Promise<void>}
  */
-async function generateIndexFile(directory) {
+async function generateIndexFile(directory, options = {}) {
+  const { defaultExportOnly = false } = options;
+
   const items = await fs.readdir(directory, {
     withFileTypes: true,
   });
@@ -60,10 +69,10 @@ async function generateIndexFile(directory) {
   const exports = await Promise.all(
     filteredItems.map((item) => {
       const exportName = path.parse(item.name).name;
-      return [
-        `export * from './${exportName}';`,
-        `export { default as ${exportName} } from './${exportName}';`,
-      ].join('\n');
+      const defaultExport = `export { default as ${exportName} } from './${exportName}';`;
+
+      if (defaultExportOnly) return defaultExport;
+      return [`export * from './${exportName}';`, defaultExport].join('\n');
     })
   );
 
@@ -156,6 +165,53 @@ require('yargs')
       console.log(`Successfully created ${namePascalCase}`);
     },
   })
+  .command('emotion [name]', 'Generates a new Emotion style set', {
+    builder: (yargs) => {
+      yargs.positional('name', {
+        describe: 'The name of the styles.',
+        type: 'string',
+        require: true,
+        coerce: toCamelCase,
+      });
+      yargs.option('description', {
+        describe: 'Description of the styles. Will be used for JSDocs.',
+        alias: 'd',
+        type: 'string',
+        default: '@todo Add description',
+        require: false,
+      });
+    },
+    handler: async (args) => {
+      const { name: nameCamelCase, description } = args;
+
+      const name = {
+        camelCase: nameCamelCase,
+      };
+
+      const templates = await loadTemplates('Emotion');
+
+      const directory = path.join(PACKAGE_ROOT, 'src', 'ui', 'emotion');
+      await fs.mkdir(directory, { recursive: true });
+
+      await Promise.all(
+        templates.map((template) =>
+          fs.writeFile(
+            path.join(
+              directory,
+              template.name
+                .replace('Emotion', nameCamelCase)
+                .replace(/\.mustache$/, '')
+            ),
+            Mustache.render(template.content, { name, description })
+          )
+        )
+      );
+
+      await generateIndexFile(directory, { defaultExportOnly: true });
+
+      console.log(`Successfully created ${nameCamelCase}`);
+    },
+  })
   .command('icon [name]', 'Generates a new React icon component', {
     builder: (yargs) => {
       yargs.positional('name', {
@@ -184,6 +240,7 @@ require('yargs')
       const templates = await loadTemplates('Icon');
 
       const directory = path.join(PACKAGE_ROOT, 'src', 'ui', 'icons');
+      await fs.mkdir(directory, { recursive: true });
 
       await Promise.all(
         templates.map((template) =>
@@ -222,7 +279,7 @@ require('yargs')
     },
     handler: async (args) => {
       const { name: namePascalCase, description } = args;
-      const nameKebabCase = `view-${kebabCase(namePascalCase)}`;
+      const nameKebabCase = kebabCase(namePascalCase);
 
       const name = {
         pascalCase: namePascalCase,
