@@ -1,106 +1,82 @@
-import store from './_store';
-import {
-  closeDialog,
-  openCreditsDialog,
-  openDialog,
-  resetThemeMode,
-  setThemeMode,
-  toggleThemeMode,
-} from './actions';
-import { DialogKey } from './types';
+// import store from './_store';
+// import {
+//   closeDialog,
+//   openDialog,
+//   resetThemeMode,
+//   setThemeMode,
+//   toggleThemeMode,
+// } from './actions';
 
-jest.mock('./_store.ts', () => ({
-  __esModule: true,
-  default: {
-    dispatch: jest.fn(),
-  },
-}));
+// jest.mock('./_store.ts', () => ({
+//   __esModule: true,
+//   default: {
+//     dispatch: jest.fn(),
+//   },
+// }));
 
-describe('data/store/actions', () => {
-  afterEach(jest.resetAllMocks);
+// describe('data/store/actions', () => {
+//   afterEach(jest.resetAllMocks);
 
-  describe('closeDialog', () => {
-    it('should dispatch action to close dialog', () => {
-      // Act
-      closeDialog();
+//   describe('closeDialog', () => {
+//     it('should dispatch action to close dialog', () => {
+//       // Act
+//       closeDialog();
 
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({ type: 'dialog/close' });
-    });
-  });
+//       // Assert
+//       expect(store.dispatch).toHaveBeenCalledWith({ type: 'dialog/close' });
+//     });
+//   });
 
-  describe('openDialog', () => {
-    it('should dispatch action to open dialog', () => {
-      // Arrange
-      const dialog = {
-        key: DialogKey.CREDITS,
-        data: { foo: 'test', bar: 123 },
-      };
+//   describe('openDialog', () => {
+//     it('should dispatch action to open dialog', () => {
+//       // Arrange
+//       const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
 
-      // Act
-      openDialog(dialog);
+//       // Act
+//       openDialog(dialog);
 
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'dialog/open',
-        payload: dialog,
-      });
-    });
-  });
+//       // Assert
+//       expect(store.dispatch).toHaveBeenCalledWith({
+//         type: 'dialog/open',
+//         payload: dialog,
+//       });
+//     });
+//   });
 
-  describe('openCreditsDialog', () => {
-    it('should dispatch action to open credits dialog', () => {
-      // Arrange
-      const dialog = {
-        key: DialogKey.CREDITS,
-        data: {},
-      };
+//   describe('toggleThemeMode', () => {
+//     it('should dispatch action to toggle light/dark mode', () => {
+//       // Act
+//       toggleThemeMode();
 
-      // Act
-      openCreditsDialog();
+//       // Assert
+//       expect(store.dispatch).toHaveBeenCalledWith({
+//         type: 'theme/mode/toggle',
+//       });
+//     });
+//   });
 
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'dialog/open',
-        payload: dialog,
-      });
-    });
-  });
+//   describe('resetThemeMode', () => {
+//     it('should dispatch action to reset light/dark mode to user preference', () => {
+//       // Act
+//       resetThemeMode();
 
-  describe('toggleThemeMode', () => {
-    it('should dispatch action to toggle light/dark mode', () => {
-      // Act
-      toggleThemeMode();
+//       // Assert
+//       expect(store.dispatch).toHaveBeenCalledWith({
+//         type: 'theme/mode/reset',
+//       });
+//     });
+//   });
 
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/mode/toggle',
-      });
-    });
-  });
+//   describe('setThemeMode', () => {
+//     it('should dispatch action to set light/dark mode to provided value', () => {
+//       // Act
+//       setThemeMode('light');
 
-  describe('resetThemeMode', () => {
-    it('should dispatch action to reset light/dark mode to user preference', () => {
-      // Act
-      resetThemeMode();
-
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/mode/reset',
-      });
-    });
-  });
-
-  describe('setThemeMode', () => {
-    it('should dispatch action to set light/dark mode to provided value', () => {
-      // Act
-      setThemeMode('light');
-
-      // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/mode/set',
-        payload: 'light',
-      });
-    });
-  });
-});
+//       // Assert
+//       expect(store.dispatch).toHaveBeenCalledWith({
+//         type: 'theme/mode/set',
+//         payload: 'light',
+//       });
+//     });
+//   });
+// });

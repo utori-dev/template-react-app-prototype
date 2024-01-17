@@ -1,36 +1,31 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { persistReducer, persistStore, createTransform } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { isEqual } from 'lodash';
 import { AppState, AppAction, ThemeState, DialogState } from './types';
 
-const isDarkMode = () =>
-  window.matchMedia &&
-  window.matchMedia('(prefers-color-scheme: dark)').matches;
+import { default as themeReducer } from './theme.slice'
 
-const initialThemeState: ThemeState = {
-  mode: isDarkMode() ? 'dark' : 'light',
+const SetTransform = createTransform(
+  // transform state on its way to being serialized and persisted.
+  (inboundState: AppState, key) => {
+    return { ...inboundState };
+  },
+
+  // transform state being rehydrated
+  (outboundState: AppState, key) => {
+    return { ...outboundState };
+  },
+
+  // define which reducers this transform gets called for.
+  { whitelist: ['theme'] }
+);
+
+const themeSliceConfig = {
+  key: 'theme',
+  storage,
+  transforms: [SetTransform],
 };
-
-// @todo This is a good choice for persistence.
-export function themeReducer(
-  state: ThemeState = initialThemeState,
-  action: AppAction
-): ThemeState {
-  switch (action.type) {
-    case 'theme/mode/toggle':
-      return { ...state, mode: state.mode === 'dark' ? 'light' : 'dark' };
-    case 'theme/mode/reset':
-      return themeReducer(state, {
-        type: 'theme/mode/set',
-        payload: isDarkMode() ? 'dark' : 'light',
-      });
-    case 'theme/mode/set': {
-      if (action.payload === state.mode) return state;
-      return { ...state, mode: action.payload };
-    }
-    default:
-      return state;
-  }
-}
 
 export function dialogReducer(
   state: DialogState = null,
@@ -47,11 +42,16 @@ export function dialogReducer(
   }
 }
 
-const store = configureStore<AppState, AppAction>({
-  reducer: {
-    theme: themeReducer,
-    dialog: dialogReducer,
-  },
+const rootPersistReducer = combineReducers({
+  theme: persistReducer(themeSliceConfig, themeReducer),
 });
 
-export default store;
+export const store = configureStore({
+  reducer: {
+    rootPersistReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
+});
+
+export const persistor = persistStore(store)
+
