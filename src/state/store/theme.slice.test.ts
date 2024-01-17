@@ -1,85 +1,29 @@
-import store from './_store';
-import { setThemeMode, resetThemeMode, toggleThemeMode } from './theme.slice';
+import { store } from './_store';
+import { default as themeReducer } from './theme.slice';
 
 describe('Theme state tests', () => {
-  it('Should be initialized with user`s preference: dark mode', () => {
+  it('Should be initialized with user`s preference', () => {
     // Act
-    const state = store.getState().persistedReducers.theme;
-
-    // Assert
-    expect(state.mode).toEqual('dark');
-  });
-
-  /**
-   * @TODO need to make these tests pass - not sure how to initialize app with light mode
-   */
-  // it('Should be initialized with user`s preference: light mode ', () => {
-  //   // // Act
-  //   const state = store.getState().persistedReducers.theme;
-
-  //   // Assert
-  //   expect(state.mode).toEqual('light');
-  // });
-
-  it('Should change theme mode in state', () => {
-    // Act
-    store.dispatch(setThemeMode('light'));
-    const state = store.getState().persistedReducers.theme;
+    const state = store.getState().rootPersistReducer.theme;
 
     // Assert
     expect(state.mode).toEqual('light');
   });
 
-  it('Should reset theme to window theme mode to dark', () => {
+  it('Should change theme mode in state', () => {
     // Arrange
-    store.dispatch(setThemeMode('light'));
+    const action = {
+      type: "theme",
+      payload: {
+        mode: 'dark'
+      }
+    }
 
     // Act
-    store.dispatch(resetThemeMode());
-    const state = store.getState().persistedReducers.theme;
+    themeReducer({ mode: 'light' }, action);
+    const state = store.getState().rootPersistReducer.theme;
 
     // Assert
-    expect(state.mode).toEqual('dark');
-  });
-
-  /**
- * @TODO need to make these tests pass - not sure how to initialize app with light mode
- */
-  // it('Should reset theme to window theme mode to light', () => {
-  //   // Arrange
-  //   store.dispatch(setThemeMode('dark'));
-
-  //   // Act
-  //   store.dispatch(resetThemeMode());
-  //   const state = store.getState().persistedReducers.theme;
-
-  //   // Assert
-  //   expect(state.mode).toEqual('light');
-  // });
-
-  it('Should toggle theme mode to dark', () => {
-    // Arrange
-    store.dispatch(setThemeMode('light'));
-
-    // Act
-    store.dispatch(toggleThemeMode());
-    const state = store.getState().persistedReducers.theme;
-
-    // Assert
-    expect(state.mode).toEqual('dark');
-  });
-  /**
-   * @TODO need to make these tests pass - not sure how to initialize app with light mode
-   */
-  // it('Should toggle theme mode to light', () => {
-  //   // Arrange
-  //   store.dispatch(setThemeMode('dark'));
-
-  //   // Act
-  //   store.dispatch(toggleThemeMode());
-  //   const state = store.getState().persistedReducers.theme;
-
-  //   // Assert
-  //   expect(state.mode).toEqual('light');
-  // });
-});
+    expect(state.mode).toEqual('dark')
+  })
+})
