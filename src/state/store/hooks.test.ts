@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useDialogData, useDialogIsOpen, useThemeMode } from './hooks';
 import {
   closeDialog,
@@ -13,7 +13,7 @@ describe('data/store/hooks', () => {
   describe('useThemeMode', () => {
     it('should return current theme mode', () => {
       // Arrange
-      act(() => setThemeMode('light'));
+      setThemeMode('light');
 
       // Act
       const { result, rerender } = renderHook(() => useThemeMode());
@@ -22,14 +22,14 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe('light');
 
       // Act
-      act(() => toggleThemeMode());
+      toggleThemeMode();
       rerender();
 
       // Assert
       expect(result.current).toBe('dark');
 
       // Teardown
-      act(() => setThemeMode('light'));
+      setThemeMode('light');
     });
   });
 
@@ -46,14 +46,14 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe(false);
 
       // Act
-      act(() => openDialog({ key, data }));
+      openDialog({ key, data });
       rerender();
 
       // Assert
       expect(result.current).toBe(true);
 
       // Teardown
-      act(() => closeDialog());
+      closeDialog();
     });
   });
 
@@ -69,24 +69,24 @@ describe('data/store/hooks', () => {
       expect(result.current).toBeNull();
 
       // Act
-      act(() => openDialog({ key, data }));
+      openDialog({ key, data });
       rerender();
 
       // Assert
       expect(result.current).toEqual(data);
 
       // Change data to new value
-      act(() => openDialog({ key, data: next }));
+      openDialog({ key, data: next });
       rerender();
       expect(result.current).toBe(next);
 
       // Verify data remains unchanged when given equivalent data.
-      act(() => openDialog({ key, data: { hola: 'mundo' } }));
+      openDialog({ key, data: { hola: 'mundo' } });
       rerender();
       expect(result.current).toBe(next);
 
       // Teardown
-      act(() => closeDialog());
+      closeDialog();
     });
   });
 });

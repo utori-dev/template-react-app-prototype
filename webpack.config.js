@@ -47,6 +47,12 @@ const config = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        // This loader processes JavaScript source code with Babel
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.tsx?$/,
         // This loader processes TypeScript source code.
         // Unlike the @babel/plugin-transform-typescript, this does type checking.
