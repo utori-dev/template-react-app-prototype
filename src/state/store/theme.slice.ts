@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThemeState } from './types';
 
-const isDarkMode = () =>
-  window.matchMedia &&
-  window.matchMedia('(prefers-color-scheme: dark)').matches;
+const isDarkMode = () => {
+  return window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
 
 const initialThemeState: ThemeState = {
   mode: isDarkMode() ? 'dark' : 'light',
@@ -18,12 +19,18 @@ export const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    changeThemeMode: (state, action: PayloadAction<'light' | 'dark'>) => {
+    setThemeMode: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.mode = action.payload;
+    },
+    resetThemeMode: (state) => {
+      state.mode = initialThemeState.mode;
+    },
+    toggleThemeMode: (state) => {
+      state.mode = state.mode === 'dark' ? 'light' : 'dark';
     }
   },
 });
 
-export const { changeThemeMode } = themeSlice.actions;
+export const { setThemeMode, resetThemeMode, toggleThemeMode } = themeSlice.actions;
 
 export default themeSlice.reducer;

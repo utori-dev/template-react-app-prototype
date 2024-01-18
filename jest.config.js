@@ -15,6 +15,7 @@ const config = {
   // Specify that the test environment should have a DOM.
   // This is important for testing a web app that runs in a browser.
   testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/testSetup.ts'],
   // Specify that code coverage should be collected.
   // Code coverage shows how many lines, functions, and branches are covered by tests.
   collectCoverage: true,

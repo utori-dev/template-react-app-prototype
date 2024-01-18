@@ -1,82 +1,84 @@
-// import store from './_store';
-// import {
-//   closeDialog,
-//   openDialog,
-//   resetThemeMode,
-//   setThemeMode,
-//   toggleThemeMode,
-// } from './actions';
+import store from './_store';
+import {
+  closeDialog,
+  openDialog,
+  resetThemeModeAction,
+  setThemeModeAction,
+  toggleThemeModeAction,
+} from './actions';
 
-// jest.mock('./_store.ts', () => ({
-//   __esModule: true,
-//   default: {
-//     dispatch: jest.fn(),
-//   },
-// }));
+jest.mock('./_store.ts', () => ({
+  __esModule: true,
+  default: {
+    dispatch: jest.fn(),
+  },
+}));
 
-// describe('data/store/actions', () => {
-//   afterEach(jest.resetAllMocks);
+describe('data/store/actions', () => {
+  afterEach(jest.resetAllMocks);
 
-//   describe('closeDialog', () => {
-//     it('should dispatch action to close dialog', () => {
-//       // Act
-//       closeDialog();
+  describe('closeDialog', () => {
+    it('should dispatch action to close dialog', () => {
+      // Act
+      closeDialog();
 
-//       // Assert
-//       expect(store.dispatch).toHaveBeenCalledWith({ type: 'dialog/close' });
-//     });
-//   });
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({ type: 'dialog/dialogClose' });
+    });
+  });
 
-//   describe('openDialog', () => {
-//     it('should dispatch action to open dialog', () => {
-//       // Arrange
-//       const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
+  describe('openDialog', () => {
+    it('should dispatch action to open dialog', () => {
+      // Arrange
+      const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
 
-//       // Act
-//       openDialog(dialog);
+      // Act
+      openDialog(dialog);
 
-//       // Assert
-//       expect(store.dispatch).toHaveBeenCalledWith({
-//         type: 'dialog/open',
-//         payload: dialog,
-//       });
-//     });
-//   });
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'dialog/dialogOpen',
+        payload: dialog,
+      });
+    });
+  });
 
-//   describe('toggleThemeMode', () => {
-//     it('should dispatch action to toggle light/dark mode', () => {
-//       // Act
-//       toggleThemeMode();
+  describe('toggleThemeMode', () => {
+    it('should dispatch action to toggle light/dark mode', () => {
+      // Act
+      toggleThemeModeAction();
 
-//       // Assert
-//       expect(store.dispatch).toHaveBeenCalledWith({
-//         type: 'theme/mode/toggle',
-//       });
-//     });
-//   });
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'theme/toggleThemeMode',
+        payload: undefined,
+      });
+    });
+  });
 
-//   describe('resetThemeMode', () => {
-//     it('should dispatch action to reset light/dark mode to user preference', () => {
-//       // Act
-//       resetThemeMode();
+  describe('resetThemeMode', () => {
+    it('should dispatch action to reset light/dark mode to user preference', () => {
+      // Act
+      resetThemeModeAction();
 
-//       // Assert
-//       expect(store.dispatch).toHaveBeenCalledWith({
-//         type: 'theme/mode/reset',
-//       });
-//     });
-//   });
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'theme/resetThemeMode',
+        payload: undefined,
+      });
+    });
+  });
 
-//   describe('setThemeMode', () => {
-//     it('should dispatch action to set light/dark mode to provided value', () => {
-//       // Act
-//       setThemeMode('light');
+  describe('setThemeMode', () => {
+    it('should dispatch action to set light/dark mode to provided value', () => {
+      // Act
+      setThemeModeAction('light');
 
-//       // Assert
-//       expect(store.dispatch).toHaveBeenCalledWith({
-//         type: 'theme/mode/set',
-//         payload: 'light',
-//       });
-//     });
-//   });
-// });
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'theme/setThemeMode',
+        payload: 'light',
+      });
+    });
+  });
+});

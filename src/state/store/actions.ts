@@ -1,24 +1,26 @@
-// // Actions are bound to the store to avoid Redux-specific concerns outside the module.
+// Actions are bound to the store to avoid Redux-specific concerns outside the module.
 
-// import store from './_store';
-// import { DialogState, ThemeState } from './types';
+import store from './_store';
+import { DialogState, ThemeState } from './types';
+import { setThemeMode, resetThemeMode, toggleThemeMode } from './theme.slice';
+import { dialogOpen, dialogClose } from './dialog.slice';
 
-// export function closeDialog(): void {
-//   store.dispatch({ type: 'dialog/close' });
-// }
+export function closeDialog(): void {
+  store.dispatch(dialogClose({ type: 'dialog/close' }));
+}
 
-// export function openDialog(payload: Exclude<DialogState, null>): void {
-//   store.dispatch({ type: 'dialog/open', payload });
-// }
+export function openDialog(payload: Exclude<DialogState, null>): void {
+  store.dispatch(dialogOpen({ type: 'dialog/open', payload: payload }));
+}
 
-// export function toggleThemeMode(): void {
-//   store.dispatch({ type: 'theme/mode/toggle' });
-// }
+export function toggleThemeModeAction(): void {
+  store.dispatch(toggleThemeMode());
+}
 
-// export function resetThemeMode(): void {
-//   store.dispatch({ type: 'theme/mode/reset' });
-// }
+export function resetThemeModeAction(): void {
+  store.dispatch(resetThemeMode());
+}
 
-// export function setThemeMode(mode: ThemeState['mode']): void {
-//   store.dispatch({ type: 'theme/mode/set', payload: mode });
-// }
+export function setThemeModeAction(mode: ThemeState['mode']): void {
+  store.dispatch(setThemeMode(mode));
+}
