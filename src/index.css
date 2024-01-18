@@ -84,6 +84,9 @@
   --color--background: var(--color--neutral-90);
   --color--on-background: var(--color--neutral-10);
 
+  --color--header: var(--color--neutral-97);
+  --color--on-header: var(--color--neutral-10);
+
   --color--neutral--surface: var(--color--neutral-100);
   --color--neutral--on-surface: var(--color--neutral-20);
 
@@ -123,6 +126,9 @@
 .dark-mode {
   --color--background: var(--color--neutral-15);
   --color--on-background: var(--color--neutral-99);
+
+  --color--header: var(--color--neutral-25);
+  --color--on-header: var(--color--neutral-99);
 
   --color--neutral--surface: var(--color--neutral-20);
   --color--neutral--on-surface: var(--color--neutral-85);

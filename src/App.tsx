@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import clsx from 'clsx';
-import { heading, text } from './ui/emotion';
+import { text } from './ui/emotion';
 import { useThemeMode } from './state';
+import { Header, Main } from './ui/components';
 
 const AppRoot = styled.div`
   position: fixed;
@@ -33,7 +34,12 @@ function App(): React.ReactElement | null {
 
   return (
     <AppRoot>
-      <h1 css={heading.lg}>Hello World</h1>
+      <Header>
+        <Header.Title to="/">Prototype React App</Header.Title>
+      </Header>
+      <Main>
+        Lorem ipsum dolor sit amet, consectetur adipiscing yada yada...
+      </Main>
     </AppRoot>
   );
 }
