@@ -2,8 +2,9 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import clsx from 'clsx';
 import { text } from './ui/emotion';
-import { useThemeMode } from './state';
-import { Header, Main } from './ui/components';
+import { toggleThemeMode, useThemeMode } from './state';
+import { Button, Header, Main } from './ui/components';
+import { DarkModeIcon, LightModeIcon } from './ui/icons';
 
 const AppRoot = styled.div`
   position: fixed;
@@ -36,6 +37,14 @@ function App(): React.ReactElement | null {
     <AppRoot>
       <Header>
         <Header.Title to="/">Prototype React App</Header.Title>
+        <Header.Actions>
+          <Button
+            iconOnly
+            label="Toggle Light and Dark Mode"
+            onClick={toggleThemeMode}
+            icon={mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+          />
+        </Header.Actions>
       </Header>
       <Main>
         Lorem ipsum dolor sit amet, consectetur adipiscing yada yada...
