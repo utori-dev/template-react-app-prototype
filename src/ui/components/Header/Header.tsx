@@ -28,8 +28,8 @@ const Header: HeaderComponent = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  background: var(--color--surface);
-  color: var(--color--on-surface);
+  background: var(--color--header);
+  color: var(--color--on-header);
 
   box-shadow: var(--shadow--md);
 ` as unknown as HeaderComponent;
