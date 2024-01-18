@@ -25,6 +25,7 @@ const config = {
     '_dexie.ts',
     '_store.ts',
     'src/ui/emotion',
+    'App.tsx',
   ],
   coverageThreshold: {
     // Specifies all global coverage at 100%
