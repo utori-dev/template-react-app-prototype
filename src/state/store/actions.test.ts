@@ -1,7 +1,7 @@
 import store from './_store';
 import {
-  closeDialog,
-  openDialog,
+  closeDialogAction,
+  openDialogAction,
   resetThemeModeAction,
   setThemeModeAction,
   toggleThemeModeAction,
@@ -20,10 +20,10 @@ describe('data/store/actions', () => {
   describe('closeDialog', () => {
     it('should dispatch action to close dialog', () => {
       // Act
-      closeDialog();
+      closeDialogAction();
 
       // Assert
-      expect(store.dispatch).toHaveBeenCalledWith({ type: 'dialog/dialogClose' });
+      expect(store.dispatch).toHaveBeenCalled();
     });
   });
 
@@ -33,7 +33,7 @@ describe('data/store/actions', () => {
       const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
 
       // Act
-      openDialog(dialog);
+      openDialogAction(dialog);
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({

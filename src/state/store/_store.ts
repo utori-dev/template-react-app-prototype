@@ -7,17 +7,23 @@ import { default as themeReducer } from './theme.slice'
 import { default as dialogReducer } from './dialog.slice'
 
 const SetTransform = createTransform(
-  // transform state on its way to being serialized and persisted.
+  /**
+   * transform state on its way to being serialized and persisted.
+   */
   (inboundState: AppState, key) => {
     return { ...inboundState };
   },
 
-  // transform state being rehydrated
+  /** 
+   * transform state being rehydrated. 
+   */
   (outboundState: AppState, key) => {
     return { ...outboundState };
   },
 
-  // define which reducers this transform gets called for.
+  /** 
+   * define which reducers this transform gets called for.
+   */
   { whitelist: ['theme'] }
 );
 
@@ -27,9 +33,15 @@ const themeSliceConfig = {
   transforms: [SetTransform],
 };
 
+
+/**
+ * Any reducers added to this object will be saved to local or session storage
+ * as defined in the slice config file
+ */
 const rootPersistReducer = combineReducers({
   theme: persistReducer(themeSliceConfig, themeReducer),
 });
+
 const store = configureStore({
   reducer: {
     rootPersistReducer,

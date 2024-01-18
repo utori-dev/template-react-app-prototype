@@ -1,8 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDialogData, useDialogIsOpen, useThemeMode } from './hooks';
 import {
-  closeDialog,
-  openDialog,
+  closeDialogAction,
+  openDialogAction,
   setThemeModeAction,
   toggleThemeModeAction,
 } from './actions';
@@ -46,14 +46,14 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe(false);
 
       // Act
-      act(() => openDialog({ key, data }));
+      act(() => openDialogAction({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toBe(true);
 
       // Teardown
-      act(() => closeDialog());
+      act(() => closeDialogAction());
     });
   });
 
@@ -69,24 +69,24 @@ describe('data/store/hooks', () => {
       expect(result.current).toBeNull();
 
       // Act
-      act(() => openDialog({ key, data }));
+      act(() => openDialogAction({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toEqual(data);
 
       // Change data to new value
-      act(() => openDialog({ key, data: next }));
+      act(() => openDialogAction({ key, data: next }));
       rerender();
       expect(result.current).toBe(next);
 
       // Verify data remains unchanged when given equivalent data.
-      act(() => openDialog({ key, data: { hola: 'mundo' } }));
+      act(() => openDialogAction({ key, data: { hola: 'mundo' } }));
       rerender();
       expect(result.current).toBe(next);
 
       // Teardown
-      act(() => closeDialog());
+      act(() => closeDialogAction());
     });
   });
 });

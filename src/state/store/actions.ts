@@ -5,12 +5,13 @@ import { DialogState, ThemeState } from './types';
 import { setThemeMode, resetThemeMode, toggleThemeMode } from './theme.slice';
 import { dialogOpen, dialogClose } from './dialog.slice';
 
-export function closeDialog(): void {
-  store.dispatch(dialogClose({ type: 'dialog/close' }));
+export function closeDialogAction(): void {
+  // @ts-ignore
+  store.dispatch(dialogClose());
 }
 
-export function openDialog(payload: Exclude<DialogState, null>): void {
-  store.dispatch(dialogOpen({ type: 'dialog/open', payload: payload }));
+export function openDialogAction(payload: Exclude<DialogState, null>): void {
+  store.dispatch(dialogOpen(payload));
 }
 
 export function toggleThemeModeAction(): void {

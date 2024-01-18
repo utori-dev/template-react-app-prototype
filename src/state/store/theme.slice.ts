@@ -10,14 +10,12 @@ const initialThemeState: ThemeState = {
   mode: isDarkMode() ? 'dark' : 'light',
 };
 
-
-const initialState = { ...initialThemeState };
 /**
  * function to create an initial state and the asscociated reducers
  */
 export const themeSlice = createSlice({
   name: 'theme',
-  initialState,
+  initialState: { ...initialThemeState },
   reducers: {
     setThemeMode: (state, action: PayloadAction<'light' | 'dark'>) => {
       state.mode = action.payload;
