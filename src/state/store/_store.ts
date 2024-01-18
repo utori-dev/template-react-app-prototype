@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, Action } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { AppState } from './types';
@@ -32,7 +32,6 @@ const themeSliceConfig = {
   storage,
   transforms: [SetTransform],
 };
-
 
 /**
  * Any reducers added to this object will be saved to local or session storage.
