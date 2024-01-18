@@ -73,6 +73,8 @@
   --m--lg: calc(var(--spacing) * 6);
   --m--xl: calc(var(--spacing) * 8);
 
+  --target--size: calc(var(--spacing) * 11);
+
   --scrollbar--size: calc(var(--spacing) * 3);
   --scrollbar--track-radius: 0;
   --scrollbar--thumb-radius: var(--border-radius--rounded);
