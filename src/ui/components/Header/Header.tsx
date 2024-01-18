@@ -66,6 +66,10 @@ Header.Actions = styled.div`
 
   color: inherit;
   background: transparent;
+
+  & > * {
+    margin-inline: var(--m--xs);
+  }
 `;
 
 export default Header;
