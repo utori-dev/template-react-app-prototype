@@ -1,4 +1,4 @@
-import { configureStore, combineReducers, Action } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { AppState } from './types';
@@ -35,16 +35,16 @@ const themeSliceConfig = {
 
 
 /**
- * Any reducers added to this object will be saved to local or session storage
- * as defined in the slice config file
+ * Any reducers added to this object will be saved to local or session storage.
+ * as defined in the slice config file.
  */
-const rootPersistReducer = combineReducers({
+const persistedReducers = combineReducers({
   theme: persistReducer(themeSliceConfig, themeReducer),
 });
 
 const store = configureStore({
   reducer: {
-    rootPersistReducer,
+    persistedReducers,
     dialog: dialogReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
@@ -53,4 +53,3 @@ const store = configureStore({
 export const persistor = persistStore(store);
 
 export default store;
-

@@ -25,7 +25,7 @@ export type ThemeAction =
   | PayloadAction<ThemeState['mode'], 'theme/mode/set'>;
 
 export type AppState = {
-  rootPersistReducer: {
+  persistedReducers: {
     theme: ThemeState;
   }
   dialog: DialogState;
