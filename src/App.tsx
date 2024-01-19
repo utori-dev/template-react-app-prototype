@@ -4,9 +4,9 @@ import clsx from 'clsx';
 import { text } from './ui/emotion';
 import {
   DialogKey,
-  closeDialog,
+  closeDialogAction,
   openCreditsDialog,
-  toggleThemeMode,
+  toggleThemeModeAction,
   useDialogIsOpen,
   useThemeMode,
 } from './state';
@@ -63,7 +63,7 @@ function App(): React.ReactElement | null {
       <Main>
         Lorem ipsum dolor sit amet, consectetur adipiscing yada yada...
       </Main>
-      <Dialog open={creditsDialogOpen} onClose={closeDialog}>
+      <Dialog open={creditsDialogOpen} onClose={closeDialogAction}>
         <Dialog.Title>Credits</Dialog.Title>
         <Dialog.Content>
           <p>

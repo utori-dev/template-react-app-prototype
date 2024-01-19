@@ -2,10 +2,12 @@ import store from './_store';
 import {
   closeDialogAction,
   openDialogAction,
+  openCreditsDialog,
   resetThemeModeAction,
   setThemeModeAction,
   toggleThemeModeAction,
 } from './actions';
+import { DialogKey } from './types';
 
 jest.mock('./_store.ts', () => ({
   __esModule: true,
@@ -30,10 +32,29 @@ describe('data/store/actions', () => {
   describe('openDialog', () => {
     it('should dispatch action to open dialog', () => {
       // Arrange
-      const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
+      const dialog = { key: 'foo' as DialogKey, data: { foo: 'test', bar: 123 } };
 
       // Act
       openDialogAction(dialog);
+
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'dialog/dialogOpen',
+        payload: dialog,
+      });
+    });
+  });
+
+  describe('openCreditsDialog', () => {
+    it('should dispatch action to open credits dialog', () => {
+      // Arrange
+      const dialog = {
+        key: DialogKey.CREDITS,
+        data: {},
+      };
+
+      // Act
+      openCreditsDialog();
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
