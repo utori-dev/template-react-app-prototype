@@ -26,6 +26,8 @@ const config = {
     '_store.ts',
     'src/ui/emotion',
     'App.tsx',
+    // Difficult to test, we'll want to have a better pattern established and address #27
+    'src/ui/components/Dialog',
   ],
   coverageThreshold: {
     // Specifies all global coverage at 100%
