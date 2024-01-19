@@ -6,7 +6,7 @@ describe('Button', () => {
   // Dummy test to get you started
   it('should render without errors', () => {
     // Act
-    const tree = renderer.create(<Button />).toJSON();
+    const tree = renderer.create(<Button label="hello" />).toJSON();
 
     // Assert
     expect(tree).toBeTruthy();
