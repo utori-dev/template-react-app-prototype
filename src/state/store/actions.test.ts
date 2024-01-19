@@ -1,6 +1,7 @@
 import store from './_store';
 import {
   closeDialog,
+  openCreditsDialog,
   openDialog,
   resetThemeMode,
   setThemeMode,
@@ -38,6 +39,25 @@ describe('data/store/actions', () => {
 
       // Act
       openDialog(dialog);
+
+      // Assert
+      expect(store.dispatch).toHaveBeenCalledWith({
+        type: 'dialog/open',
+        payload: dialog,
+      });
+    });
+  });
+
+  describe('openCreditsDialog', () => {
+    it('should dispatch action to open credits dialog', () => {
+      // Arrange
+      const dialog = {
+        key: DialogKey.CREDITS,
+        data: {},
+      };
+
+      // Act
+      openCreditsDialog();
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
