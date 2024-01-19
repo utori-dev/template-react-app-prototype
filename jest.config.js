@@ -12,6 +12,9 @@
  * @type {Object}
  */
 const config = {
+  moduleNameMapper: {
+    '^dexie$': require.resolve('dexie'),
+  },
   // Specify that the test environment should have a DOM.
   // This is important for testing a web app that runs in a browser.
   testEnvironment: 'jsdom',
