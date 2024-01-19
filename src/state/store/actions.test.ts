@@ -6,6 +6,7 @@ import {
   setThemeMode,
   toggleThemeMode,
 } from './actions';
+import { DialogKey } from './types';
 
 jest.mock('./_store.ts', () => ({
   __esModule: true,
@@ -30,7 +31,10 @@ describe('data/store/actions', () => {
   describe('openDialog', () => {
     it('should dispatch action to open dialog', () => {
       // Arrange
-      const dialog = { key: 'foo', data: { foo: 'test', bar: 123 } };
+      const dialog = {
+        key: DialogKey.CREDITS,
+        data: { foo: 'test', bar: 123 },
+      };
 
       // Act
       openDialog(dialog);

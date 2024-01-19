@@ -6,6 +6,7 @@ import {
   setThemeMode,
   toggleThemeMode,
 } from './actions';
+import { DialogKey } from './types';
 
 describe('data/store/hooks', () => {
   afterEach(jest.resetAllMocks);
@@ -36,7 +37,7 @@ describe('data/store/hooks', () => {
   describe('useDialogIsOpen', () => {
     it('should return whether specified dialog is currently open', () => {
       // Arrange
-      const key = 'foo';
+      const key = DialogKey.CREDITS;
       const data = { hello: 'world' };
 
       // Act
@@ -60,7 +61,7 @@ describe('data/store/hooks', () => {
   describe('useDialogData', () => {
     it('should return specified dialog data', () => {
       // Arrange
-      const key = 'foo';
+      const key = DialogKey.CREDITS;
       const data = { hello: 'world' };
       const next = { hola: 'mundo' };
 
