@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import { PersistGate } from 'redux-persist/integration/react'
-import { Provider } from 'react-redux'
+import { HashRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 import store, { persistor } from './state/store/_store';
 
 // Ensure that the styles from index.css are included.
