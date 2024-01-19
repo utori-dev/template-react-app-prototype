@@ -1,14 +1,13 @@
-if (typeof window.matchMedia !== 'function') {
-  window.matchMedia = (query) => ({
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: query.includes('(prefers-color-scheme: dark)'),
     media: query,
-    matches:
-      query.includes(`prefers-color-scheme: light`) || 
-      query.includes(`prefers-color-scheme: dark`),
-    onchange: () => { },
-    addListener: () => { },
-    removeListener: () => { },
-    addEventListener: () => { },
-    removeEventListener: () => { },
-    dispatchEvent: () => false,
-  });
-}
+    onchange: null,
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+});

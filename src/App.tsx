@@ -49,7 +49,7 @@ function App(): React.ReactElement | null {
           <Button
             iconOnly
             label="Toggle Light and Dark Mode"
-            onClick={toggleThemeMode}
+            onClick={toggleThemeModeAction}
             icon={mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
           />
           <Button

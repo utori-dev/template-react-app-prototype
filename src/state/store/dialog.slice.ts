@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { isEqual } from 'lodash'
+import { isEqual } from 'lodash';
 import { DialogState } from './types';
 
 const initialState: DialogState = null;
@@ -16,7 +16,7 @@ export const dialogSlice = createSlice({
     },
     dialogClose: (state) => {
       return null;
-    }
+    },
   },
 });
 
