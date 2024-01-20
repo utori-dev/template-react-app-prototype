@@ -25,7 +25,7 @@ function useSelector<T>(
   return value;
 }
 
-const selectThemeMode = (state: AppState) => state.theme.mode;
+const selectThemeMode = (state: AppState) => state.persistedReducers.theme.mode;
 
 /**
  * Returns the color scheme for the current theme.

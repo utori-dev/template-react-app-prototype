@@ -1,10 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
 import { useDialogData, useDialogIsOpen, useThemeMode } from './hooks';
 import {
-  closeDialog,
-  openDialog,
-  setThemeMode,
-  toggleThemeMode,
+  closeDialogAction,
+  openDialogAction,
+  setThemeModeAction,
+  toggleThemeModeAction,
 } from './actions';
 import { DialogKey } from './types';
 
@@ -14,7 +14,7 @@ describe('data/store/hooks', () => {
   describe('useThemeMode', () => {
     it('should return current theme mode', () => {
       // Arrange
-      act(() => setThemeMode('light'));
+      act(() => setThemeModeAction('light'));
 
       // Act
       const { result, rerender } = renderHook(() => useThemeMode());
@@ -23,21 +23,21 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe('light');
 
       // Act
-      act(() => toggleThemeMode());
+      act(() => toggleThemeModeAction());
       rerender();
 
       // Assert
       expect(result.current).toBe('dark');
 
       // Teardown
-      act(() => setThemeMode('light'));
+      act(() => setThemeModeAction('light'));
     });
   });
 
   describe('useDialogIsOpen', () => {
     it('should return whether specified dialog is currently open', () => {
       // Arrange
-      const key = DialogKey.CREDITS;
+      const key = 'foo' as DialogKey;
       const data = { hello: 'world' };
 
       // Act
@@ -47,21 +47,21 @@ describe('data/store/hooks', () => {
       expect(result.current).toBe(false);
 
       // Act
-      act(() => openDialog({ key, data }));
+      act(() => openDialogAction({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toBe(true);
 
       // Teardown
-      act(() => closeDialog());
+      act(() => closeDialogAction());
     });
   });
 
   describe('useDialogData', () => {
     it('should return specified dialog data', () => {
       // Arrange
-      const key = DialogKey.CREDITS;
+      const key = 'foo' as DialogKey;
       const data = { hello: 'world' };
       const next = { hola: 'mundo' };
 
@@ -70,24 +70,24 @@ describe('data/store/hooks', () => {
       expect(result.current).toBeNull();
 
       // Act
-      act(() => openDialog({ key, data }));
+      act(() => openDialogAction({ key, data }));
       rerender();
 
       // Assert
       expect(result.current).toEqual(data);
 
       // Change data to new value
-      act(() => openDialog({ key, data: next }));
+      act(() => openDialogAction({ key, data: next }));
       rerender();
       expect(result.current).toBe(next);
 
       // Verify data remains unchanged when given equivalent data.
-      act(() => openDialog({ key, data: { hola: 'mundo' } }));
+      act(() => openDialogAction({ key, data: { hola: 'mundo' } }));
       rerender();
       expect(result.current).toBe(next);
 
       // Teardown
-      act(() => closeDialog());
+      act(() => closeDialogAction());
     });
   });
 });
