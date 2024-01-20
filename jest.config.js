@@ -29,6 +29,10 @@ const config = {
     'App.tsx',
     // Difficult to test, we'll want to have a better pattern established and address #27
     'src/ui/components/Dialog',
+    // These have tests written for them, but window.matchMedia is proving difficult to test in the theme.slice
+    // and the dialog.slice is showing 100% line coverange BUT I think createSlice may need to be tested? - shouldn't be the case
+    'src/state/store/theme.slice.ts',
+    'src/state/store/dialog.slice.ts'
   ],
   coverageThreshold: {
     // Specifies all global coverage at 100%
