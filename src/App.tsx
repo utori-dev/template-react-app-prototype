@@ -10,7 +10,7 @@ import {
   useDialogIsOpen,
   useThemeMode,
 } from './state';
-import { Button, Dialog, Header, Main } from './ui/components';
+import { Button, Dialog, Header, Main, FormControl, FormField } from './ui/components';
 import { DarkModeIcon, InfoIcon, LightModeIcon } from './ui/icons';
 
 const AppRoot = styled.div`
@@ -33,6 +33,16 @@ const AppRoot = styled.div`
 function App(): React.ReactElement | null {
   const mode = useThemeMode();
   const creditsDialogOpen = useDialogIsOpen(DialogKey.CREDITS);
+
+  const [formFields, setFormFields] = React.useState({
+    formA: 'test'
+  });
+
+  const doSetFormFields = (event: React.FormEvent) => {
+    event.preventDefault();
+    const target = event.target as HTMLInputElement;
+    setFormFields({ ...formFields, formA: target.value });
+  };
 
   React.useEffect(() => {
     document.body.className = clsx({
@@ -63,6 +73,9 @@ function App(): React.ReactElement | null {
       <Main>
         Lorem ipsum dolor sit amet, consectetur adipiscing yada yada...
       </Main>
+      <FormControl id="form-test">
+        <FormField placeholder={"name me"} name="test" label={"test-form"} value={''} onChange={(event) => doSetFormFields(event)}></FormField>
+      </FormControl>
       <Dialog open={creditsDialogOpen} onClose={closeDialog}>
         <Dialog.Title>Credits</Dialog.Title>
         <Dialog.Content>
