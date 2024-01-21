@@ -10,3 +10,5 @@ export * from './LightModeIcon';
 export { default as LightModeIcon } from './LightModeIcon';
 export * from './SvgIcon';
 export { default as SvgIcon } from './SvgIcon';
+export * from './UtoriLogoIcon';
+export { default as UtoriLogoIcon } from './UtoriLogoIcon';
