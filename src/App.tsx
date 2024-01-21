@@ -60,9 +60,7 @@ function App(): React.ReactElement | null {
           />
         </Header.Actions>
       </Header>
-      <Main>
-        Lorem ipsum dolor sit amet, consectetur adipiscing yada yada...
-      </Main>
+      <Main />
       <Dialog open={creditsDialogOpen} onClose={closeDialogAction}>
         <Dialog.Title>Credits</Dialog.Title>
         <Dialog.Content>
