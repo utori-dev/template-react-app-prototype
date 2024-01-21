@@ -7,6 +7,7 @@ const Section = styled.section`
   display: flex;
   flex-flow: column;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const TextContainer = styled.div`
@@ -19,6 +20,29 @@ const Paragraph = styled.p`
   a {
     margin-left: 0.5rem;
   }
+`;
+
+const List = styled.ul`
+  list-style-type: none;
+`;
+
+const ListItem = styled.li`
+  padding: 0.5rem 0rem;
+  margin: 0.5rem 0rem;
+`;
+
+const Span = styled.span`
+  padding: 0.35rem;
+  border-radius: 0.25rem;
+  color: black;
+  background-color: lightgray;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+`;
+
+const H3 = styled.h3`
+  margin-bottom: 0rem;
 `;
 
 /**
@@ -46,14 +70,7 @@ const Main: React.FC<MainProps> = (props) => {
         background: transparent;
       `}
     >
-      <Section
-        css={css`
-          display: flex;
-          flex-flow: column;
-          align-items: center;
-          margin-bottom: 2rem;
-        `}
-      >
+      <Section>
         <h2
           css={css`
             text-align: center;
@@ -73,7 +90,7 @@ const Main: React.FC<MainProps> = (props) => {
       </Section>
 
       <Section>
-        <h3>Purpose</h3>
+        <H3>Purpose</H3>
         <TextContainer>
           <Paragraph>
             Starter React app with TypeScript and several helpful dependencies.
@@ -93,6 +110,48 @@ const Main: React.FC<MainProps> = (props) => {
             </a>
           </Paragraph>
         </TextContainer>
+      </Section>
+
+      <Section>
+        <H3>Useful Scripts</H3>
+        <List>
+          <ListItem>
+            <i>
+              npm run generate:icon <b>icon name</b>
+            </i>
+            <div>
+              Used to generate a React icon/svg component which will be saved to{' '}
+              <Span>./src/ui/icons/</Span>
+            </div>
+          </ListItem>
+          <ListItem>
+            <i>
+              npm run generate:emotion <b>emotion name</b>
+            </i>
+            <div>
+              Used to generate an Emotion.js template file which will be saved
+              to <Span>./src/ui/emotion/</Span>
+            </div>
+          </ListItem>
+          <ListItem>
+            <i>
+              npm run generate:component <b>component name</b>
+            </i>
+            <div>
+              Used to generate a React functional component which will be saved
+              to <Span>./src/ui/components/</Span>
+            </div>
+          </ListItem>
+          <ListItem>
+            <i>
+              npm run generate:view <b>view name</b>
+            </i>
+            <div>
+              Used to generate a React functional component which will be saved
+              to <Span>./src/views/</Span>
+            </div>
+          </ListItem>
+        </List>
       </Section>
     </div>
   );
