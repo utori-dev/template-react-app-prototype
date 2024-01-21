@@ -34,7 +34,7 @@ describe('registerServiceWorker', () => {
 
     // Assert
     expect(window.navigator.serviceWorker.register).toHaveBeenCalledWith(
-      '/service-worker.js'
+      'service-worker.js'
     );
   });
 
