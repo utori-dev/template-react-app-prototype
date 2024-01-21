@@ -3,11 +3,11 @@
   "name": "Vanilla Web App Template",
   "short_name": "Web App",
   "start_url": ".",
-  "scope": "/template-react-app-prototype/",
+  "scope": ".",
   "display": "minimal-ui",
   "background_color": "#ffffff",
   "theme_color": "#4898da",
-  "description": "Starter web app with HTML, CSS, JavaScript, and development dependencies.",
+  "description": "Template app for creating prototypes with React",
   "icons": [
     {
       "src": "assets/logo/logo-512.png",
