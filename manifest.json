@@ -3,7 +3,7 @@
   "name": "Vanilla Web App Template",
   "short_name": "Web App",
   "start_url": ".",
-  "scope": ".",
+  "scope": "/template-react-app-prototype/",
   "display": "minimal-ui",
   "background_color": "#ffffff",
   "theme_color": "#4898da",
