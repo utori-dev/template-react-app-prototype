@@ -5,7 +5,7 @@
  */
 async function registerServiceWorker(): Promise<void> {
   if ('serviceWorker' in navigator) {
-    await navigator.serviceWorker.register('/service-worker.js');
+    await navigator.serviceWorker.register('service-worker.js');
   }
 }
 

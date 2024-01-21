@@ -1,6 +1,16 @@
 // Manually change this when updating the project.
 const version = '0.0.0';
 
+/**
+ * @typedef {Object} FetchEvent
+ * @property {Request} request
+ */
+
+/**
+ *
+ * @param {FetchEvent} event
+ * @returns
+ */
 function cacheGetRequests(event) {
   // We should only cache GET requests.
   // POST, PUT, and other requests have side effects,
@@ -16,8 +26,8 @@ function cacheGetRequests(event) {
       // This method returns a promise that resolves to a cache entry matching the request.
       // Once the promise is settled, we can then provide a response to the fetch request.
       .match(event.request)
-      .then(function (cached) {
-        var networked = fetch(event.request)
+      .then((cached) => {
+        const networked = fetch(event.request)
           .then(cacheFetchResponse, createServiceUnavailableResponse)
           .catch(createServiceUnavailableResponse);
 
@@ -37,16 +47,27 @@ function cacheGetRequests(event) {
         function cacheFetchResponse(response) {
           // Copy the response before replying to the network request.
           // This is the response that will be stored on the ServiceWorker cache.
-          var cacheCopy = response.clone();
+          const cacheCopy = response.clone();
 
           caches
             // Open a cache to store the response for this request.
             .open(version + 'pages')
-            .then(function add(cache) {
+            .then((cache) => {
               // Store the response for the request.
               // Later it will be available to caches.match(event.request) calls.
-              cache.put(event.request, cacheCopy);
-            });
+              return cache.put(event.request, cacheCopy);
+            })
+            .then(
+              () =>
+                console.log(
+                  `ServiceWorker: Successfully cached ${event.request.url}`
+                ),
+              (error) =>
+                console.error(
+                  `ServiceWorker: Failed to cache ${event.request.url}`,
+                  error
+                )
+            );
 
           // Return the response so that the promise is settled in fulfillment.
           return response;
