@@ -10,6 +10,7 @@
     "format": "prettier **/** --write",
     "generate:icon": "node ./.templates/generate.cjs icon",
     "generate:emotion": "node ./.templates/generate.cjs emotion",
+    "generate:slice": "node ./.templates/generate.cjs slice",
     "generate:component": "node ./.templates/generate.cjs component",
     "generate:view": "node ./.templates/generate.cjs view",
     "lint": "eslint src/** --ext .js,.jsx,.ts,.tsx",

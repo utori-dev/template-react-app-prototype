@@ -214,6 +214,55 @@ require('yargs')
       console.log(`Successfully created ${nameCamelCase}`);
     },
   })
+  .command('slice [name]', 'Generates a new Redux Toolkit slice of state', {
+    builder: (yargs) => {
+      yargs.positional('name', {
+        describe: 'The name of the slice of state being managed.',
+        type: 'string',
+        require: true,
+        coerce: toCamelCase,
+      });
+      yargs.option('description', {
+        describe: 'Description of the state being managed. Will be used for JSDocs.',
+        alias: 'd',
+        type: 'string',
+        default: '@todo Add description',
+        require: false,
+      });
+    },
+    handler: async (args) => {
+      const { name: nameCamelCase, description } = args;
+      const namePascalCase = toPascalCase(nameCamelCase);
+
+      const name = {
+        camelCase: nameCamelCase,
+        pascalCase: namePascalCase,
+      };
+
+      console.log(name)
+
+      const templates = await loadTemplates('Slice');
+
+      const directory = path.join(PACKAGE_ROOT, 'src', 'state', 'store');
+      await fs.mkdir(directory, { recursive: true });
+
+      await Promise.all(
+        templates.map((template) =>
+          fs.writeFile(
+            path.join(
+              directory,
+              template.name
+                .replace('Slice', nameCamelCase)
+                .replace(/\.mustache$/, '')
+            ),
+            Mustache.render(template.content, { name, description })
+          )
+        )
+      );
+
+      console.log(`Successfully created ${nameCamelCase}`);
+    },
+  })
   .command('icon [name]', 'Generates a new React icon component', {
     builder: (yargs) => {
       yargs.positional('name', {
