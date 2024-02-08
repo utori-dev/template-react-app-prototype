@@ -1,4 +1,4 @@
-name: Lint
+name: Checks
 
 on:
   push:
@@ -7,13 +7,12 @@ on:
     branches: ['main']
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v3
@@ -23,4 +22,21 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+
+  build:
+    needs: setup
+
+    steps:
+      - run: npm run build
+
+  lint:
+    needs: setup
+
+    steps:
       - run: npm run lint
+
+  test:
+    needs: setup
+
+    steps:
+      - run: npm test
