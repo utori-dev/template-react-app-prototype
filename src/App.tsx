@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from '@emotion/styled';
 import clsx from 'clsx';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { text } from './ui/emotion';
 import {
   DialogKey,
@@ -12,6 +13,7 @@ import {
 } from './state';
 import { Button, Dialog, Header, Main } from './ui/components';
 import { DarkModeIcon, InfoIcon, LightModeIcon } from './ui/icons';
+import { HomeView } from './views';
 
 const AppRoot = styled.div`
   position: fixed;
@@ -60,7 +62,14 @@ function App(): React.ReactElement | null {
           />
         </Header.Actions>
       </Header>
-      <Main />
+      <Main>
+        <Routes>
+          <Route path="/" element={<Navigate to="home" />} />
+          <Route path="/home">
+            <Route index element={<HomeView />} />
+          </Route>
+        </Routes>
+      </Main>
       <Dialog open={creditsDialogOpen} onClose={closeDialogAction}>
         <Dialog.Title>Credits</Dialog.Title>
         <Dialog.Content>
