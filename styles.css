@@ -46,6 +46,30 @@
   --color--neutral-99: #fcfcfc;
   --color--neutral-100: #ffffff;
 
+  --color--primary-00: #000000;
+  --color--primary-05: #060c11;
+  --color--primary-10: #0b1822;
+  --color--primary-15: #112333;
+  --color--primary-20: #162f44;
+  --color--primary-25: #1c3b54;
+  --color--primary-30: #214765;
+  --color--primary-35: #275276;
+  --color--primary-40: #2c5e87;
+  --color--primary-45: #326a98;
+  --color--primary-50: #4d78ab;
+  --color--primary-55: #5785ab;
+  --color--primary-60: #6a93b4;
+  --color--primary-65: #7da0bd;
+  --color--primary-70: #8faec7;
+  --color--primary-75: #a2bbd0;
+  --color--primary-80: #b4c9da;
+  --color--primary-85: #c7d6e3;
+  --color--primary-90: #dae4ec;
+  --color--primary-95: #ecf1f6;
+  --color--primary-97: #f4f7f9;
+  --color--primary-99: #fbfcfd;
+  --color--primary-100: #ffffff;
+
   --font-size--xs: 0.85rem;
   --font-size--sm: 1rem;
   --font-size--md: 1.25rem;
@@ -85,6 +109,9 @@
 .light-mode {
   --color--background: var(--color--neutral-90);
   --color--on-background: var(--color--neutral-10);
+
+  --color--link: var(--color--primary-50);
+  --color--link--hover: var(--color--primary-20);
 
   --color--header: var(--color--neutral-97);
   --color--on-header: var(--color--neutral-10);
@@ -129,6 +156,9 @@
   --color--background: var(--color--neutral-15);
   --color--on-background: var(--color--neutral-99);
 
+  --color--link: var(--color--primary-75);
+  --color--link--hover: var(--color--primary-50);
+
   --color--header: var(--color--neutral-25);
   --color--on-header: var(--color--neutral-99);
 
@@ -166,6 +196,14 @@
   --scrollbar--track-color: var(--color--neutral-30);
   --scrollbar--track-color--hover: var(--color--neutral-35);
   --scrollbar--track-color--active: var(--color--neutral-25);
+}
+
+a {
+  color: var(--color--link);
+}
+
+a:hover {
+  color: var(--color--link--hover);
 }
 
 * {
