@@ -1,11 +1,10 @@
 import store from './_store';
-import { setThemeMode, resetThemeMode, toggleThemeMode } from './theme.slice';
+import theme from './theme.slice';
 
 describe('Theme state tests', () => {
-
   it('Should be initialized with user`s preference', () => {
     // Act
-    const state = store.getState().persistedReducers.theme;
+    const state = store.getState().persisted.theme;
 
     // Assert
     expect(state.mode).toEqual('dark');
@@ -13,8 +12,8 @@ describe('Theme state tests', () => {
 
   it('Should change theme mode in state', () => {
     // Act
-    store.dispatch(setThemeMode('light'));
-    const state = store.getState().persistedReducers.theme;
+    store.dispatch(theme.actions.setMode('light'));
+    const state = store.getState().persisted.theme;
 
     // Assert
     expect(state.mode).toEqual('light');
@@ -22,11 +21,11 @@ describe('Theme state tests', () => {
 
   it('Should reset theme to window theme mode', () => {
     // Arrange
-    store.dispatch(setThemeMode('light'));
+    store.dispatch(theme.actions.setMode('light'));
 
     // Act
-    store.dispatch(resetThemeMode());
-    const state = store.getState().persistedReducers.theme;
+    store.dispatch(theme.actions.resetMode());
+    const state = store.getState().persisted.theme;
 
     // Assert
     expect(state.mode).toEqual('dark');
@@ -34,13 +33,13 @@ describe('Theme state tests', () => {
 
   it('Should toggle theme mode', () => {
     // Arrange
-    store.dispatch(setThemeMode('light'));
+    store.dispatch(theme.actions.setMode('light'));
 
     // Act
-    store.dispatch(toggleThemeMode());
-    const state = store.getState().persistedReducers.theme;
+    store.dispatch(theme.actions.toggleMode());
+    const state = store.getState().persisted.theme;
 
     // Assert
     expect(state.mode).toEqual('dark');
-  })
-})
+  });
+});

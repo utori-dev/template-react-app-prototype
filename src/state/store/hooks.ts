@@ -4,6 +4,7 @@ import { isEqual as isDeepEqual } from 'lodash';
 import { AppState, DialogKey, EqualityChecker } from './types';
 import store from './_store';
 import dialog from './dialog.slice';
+import theme from './theme.slice';
 
 function useSelector<T>(
   selector: Selector<AppState, T>,
@@ -26,7 +27,14 @@ function useSelector<T>(
   return value;
 }
 
-const selectThemeMode = (state: AppState) => state.persistedReducers.theme.mode;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function createPersistedSelector<T, ARGS extends any[] = any[]>(
+  selector: Selector<AppState['persisted'], T>
+) {
+  return (state: AppState, ...args: ARGS) => selector(state.persisted, ...args);
+}
+
+const selectThemeMode = createPersistedSelector(theme.selectors.getMode);
 
 /**
  * Returns the color scheme for the current theme.

@@ -27,12 +27,12 @@ export interface ThemeState {
 }
 
 export type ThemeAction =
-  | Action<'theme/mode/toggle'>
-  | Action<'theme/mode/reset'>
-  | PayloadAction<ThemeState['mode'], 'theme/mode/set'>;
+  | Action<'theme/toggleMode'>
+  | Action<'theme/resetMode'>
+  | PayloadAction<ThemeState['mode'], 'theme/setMode'>;
 
 export type AppState = {
-  persistedReducers: {
+  persisted: {
     theme: ThemeState;
   };
   dialog: DialogState;

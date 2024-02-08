@@ -3,7 +3,7 @@ import { persistReducer, persistStore, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { AppState } from './types';
 
-import { default as themeReducer } from './theme.slice';
+import theme from './theme.slice';
 import dialog from './dialog.slice';
 
 const SetTransform = createTransform(
@@ -23,23 +23,24 @@ const SetTransform = createTransform(
   { whitelist: ['theme'] }
 );
 
-const themeSliceConfig = {
-  key: 'theme',
-  storage,
-  transforms: [SetTransform],
-};
-
 /**
  * Any reducers added to this object will be saved to local or session storage.
  * as defined in the slice config file.
  */
-const persistedReducers = combineReducers({
-  theme: persistReducer(themeSliceConfig, themeReducer),
+const persisted = combineReducers({
+  theme: persistReducer(
+    {
+      key: theme.name,
+      storage,
+      transforms: [SetTransform],
+    },
+    theme.reducer
+  ),
 });
 
 const store = configureStore({
   reducer: {
-    persistedReducers,
+    persisted,
     dialog: dialog.reducer,
   },
   middleware: (getDefaultMiddleware) =>

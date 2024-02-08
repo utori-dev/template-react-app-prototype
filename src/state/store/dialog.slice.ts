@@ -15,17 +15,16 @@ type DialogReducers = {
 };
 
 function isOpen(state: DialogState, key?: DialogKey): state is DialogStateOpen {
-  if (!state) return false;
-  if (key && key !== state.key) return false;
-  return true;
+  if (key) return state?.key === key;
+  return !!state;
 }
 
 function getData<K extends DialogKey, D extends AnyDialogData = AnyDialogData>(
   state: DialogState,
   key: K
-): D | undefined {
-  if (isOpen(state, key)) state.data as D;
-  return undefined;
+): D | null {
+  if (state?.key === key) return state?.data as D;
+  return null;
 }
 
 const dialog = createSlice<
