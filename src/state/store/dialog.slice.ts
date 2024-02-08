@@ -1,25 +1,49 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isEqual } from 'lodash';
-import { DialogState } from './types';
+import {
+  AnyDialogData,
+  DialogKey,
+  DialogState,
+  DialogStateOpen,
+} from './types';
 
 const initialState: DialogState = null;
 
-export const dialogSlice = createSlice({
+type DialogReducers = {
+  open(state: DialogState, action: PayloadAction<DialogStateOpen>): DialogState;
+  close(state: DialogState, action: Action): DialogState;
+};
+
+function isOpen(state: DialogState, key?: DialogKey): state is DialogStateOpen {
+  if (!state) return false;
+  if (key && key !== state.key) return false;
+  return true;
+}
+
+function getData<K extends DialogKey, D extends AnyDialogData = AnyDialogData>(
+  state: DialogState,
+  key: K
+): D | undefined {
+  if (isOpen(state, key)) state.data as D;
+  return undefined;
+}
+
+const dialog = createSlice<
+  DialogState,
+  DialogReducers,
+  'dialog',
+  { isOpen: typeof isOpen; getData: typeof getData }
+>({
   name: 'dialog',
-  initialState: initialState,
-  /** @todo These reducers don't alter state currently - not sure what the plan is here */
+  initialState,
   reducers: {
-    // @ts-ignore
-    dialogOpen: (state, action: PayloadAction<Exclude<DialogState, null>>) => {
-      if (isEqual(state, action.payload)) return state;
-      return action.payload;
-    },
-    dialogClose: (state) => {
-      return null;
-    },
+    open: (
+      state: DialogState,
+      { payload }: PayloadAction<DialogStateOpen>
+    ): DialogState => (isEqual(state, payload) ? state : payload),
+    close: () => null,
   },
+  selectors: { getData, isOpen },
 });
 
-export const { dialogOpen, dialogClose } = dialogSlice.actions;
-
-export default dialogSlice.reducer;
+export default dialog;

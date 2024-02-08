@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Selector } from '@reduxjs/toolkit';
 import { isEqual as isDeepEqual } from 'lodash';
-import { AppState, EqualityChecker } from './types';
+import { AppState, DialogKey, EqualityChecker } from './types';
 import store from './_store';
+import dialog from './dialog.slice';
 
 function useSelector<T>(
   selector: Selector<AppState, T>,
@@ -34,9 +35,6 @@ const selectThemeMode = (state: AppState) => state.persistedReducers.theme.mode;
  */
 export const useThemeMode = () => useSelector(selectThemeMode);
 
-const selectDialogData = (state: AppState, key: string) =>
-  state.dialog?.key === key ? state.dialog.data : null;
-
 /**
  * Returns the custom data for the dialog.
  * If the dialog is closed, the result will be null.
@@ -46,14 +44,11 @@ const selectDialogData = (state: AppState, key: string) =>
  */
 export function useDialogData(key: string) {
   const selector = useCallback(
-    (state: AppState) => selectDialogData(state, key),
+    (state: AppState) => dialog.selectors.getData(state, key as DialogKey),
     [key]
   );
   return useSelector(selector, isDeepEqual);
 }
-
-const selectDialogIsOpen = (state: AppState, key: string) =>
-  state.dialog?.key === key;
 
 /**
  * Determines whether or not the given dialog is open.
@@ -61,9 +56,10 @@ const selectDialogIsOpen = (state: AppState, key: string) =>
  * @param key
  * @returns {boolean}
  */
-export function useDialogIsOpen(key: string) {
+export function useDialogIsOpen(key?: string) {
   const selector = useCallback(
-    (state: AppState) => selectDialogIsOpen(state, key),
+    (state: AppState) =>
+      dialog.selectors.isOpen(state, key as DialogKey | undefined),
     [key]
   );
   return useSelector(selector, isDeepEqual);
