@@ -2,53 +2,82 @@ import * as React from 'react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { UtoriLogoIcon } from '../../ui/icons';
+import { heading, text } from '../../ui/emotion';
 
 /**
  * Props for the HomeView component.
  */
 export type HomeViewProps = React.HTMLAttributes<HTMLDivElement>;
 
-const Section = styled.section`
-  display: flex;
-  flex-flow: column;
-  align-items: center;
-  margin-bottom: 2rem;
-`;
+const Section: React.FC<{
+  header: React.ReactNode;
+  children: React.ReactNode;
+}> = ({ header, children }) => (
+  <section
+    css={css`
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      margin-bottom: var(--m--xl);
+    `}
+  >
+    <h2
+      css={css`
+        text-align: center;
+        ${heading.md}
+        margin-bottom: 0rem;
+      `}
+    >
+      {header}
+    </h2>
+    <div
+      css={css`
+        max-width: 40rem;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+      `}
+    >
+      {children}
+    </div>
+  </section>
+);
 
-const TextContainer = styled.div`
-  max-width: 40rem;
-  margin: auto;
-  text-align: left;
-`;
-
-const Paragraph = styled.p`
-  a {
-    margin-left: 0.5rem;
-  }
-`;
-
-const List = styled.ul`
+const ScriptList = styled.ul`
   list-style-type: none;
+  padding: 0;
 `;
 
-const ListItem = styled.li`
-  padding: 0.5rem 0rem;
-  margin: 0.5rem 0rem;
-`;
-
-const Span = styled.span`
-  padding: 0.35rem;
-  border-radius: 0.25rem;
-  color: black;
-  background-color: lightgray;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-`;
-
-const H3 = styled.h3`
-  margin-bottom: 0rem;
-`;
+const ScriptListItem: React.FC<{
+  command: string;
+  notes?: React.ReactNode[];
+  children: React.ReactNode;
+}> = ({ command, notes, children }) => (
+  <li
+    css={css`
+      padding: var(--p--md) 0;
+      margin: var(--m--md) 0;
+    `}
+  >
+    <code>{command}</code>
+    <div
+      css={css`
+        ${text.sm};
+        margin: var(--m--sm) var(--m--md);
+      `}
+    >
+      {children}
+    </div>
+    {notes && !!notes.length && (
+      <ul>
+        {notes.map((note, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <li key={index}>{note}</li>
+        ))}
+      </ul>
+    )}
+  </li>
+);
 
 /**
  * @todo Add description
@@ -58,88 +87,71 @@ const H3 = styled.h3`
  */
 const HomeView: React.FC<HomeViewProps> = (props) => (
   <div {...props}>
-    <Section>
-      <h2
+    <h1
+      css={css`
+        text-align: center;
+        ${heading.lg};
+        margin: var(--m--lg) 0;
+      `}
+    >
+      Prototype React App Template
+    </h1>
+    <Section header="By utori.dev">
+      <div
         css={css`
           text-align: center;
         `}
       >
-        Utori dev
-      </h2>
-      <UtoriLogoIcon
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        width="200"
-        height="200"
-        fill="#4898da"
-        stroke="none"
-        viewBox="0 0 100 100"
-      />
+        <UtoriLogoIcon
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          version="1.1"
+          width="200"
+          height="200"
+          fill="#4898da"
+          stroke="none"
+          viewBox="0 0 100 100"
+        />
+      </div>
+      <p>
+        <a href="https://utori.dev">utori.dev</a> is a project that aims to
+        offer templates and tools for getting started with web development.
+      </p>
     </Section>
 
-    <Section>
-      <H3>Purpose</H3>
-      <TextContainer>
-        <Paragraph>
-          Starter React app with TypeScript and several helpful dependencies.
-        </Paragraph>
-        <Paragraph>
-          This template is ideal for prototypes, but includes more dependencies
-          that are likely needed for your individual use case. It is a good idea
-          to review these dependencies and remove any you find unnecessary. This
-          template is quite restrictive to encourage good practices, even while
-          prototyping. Feel free to remove these restrictions if you decide they
-          are unnecessary.
-        </Paragraph>
-        <Paragraph>
-          The repository can be viewed here:
-          <a href="https://github.com/utori-dev/template-react-app-prototype">
-            GitHub Repo
-          </a>
-        </Paragraph>
-      </TextContainer>
+    <Section header="Purpose">
+      <p>Starter React app with TypeScript and several helpful dependencies.</p>
+      <p>
+        This template is ideal for prototypes, but includes more dependencies
+        that are likely needed for your individual use case. It is a good idea
+        to review these dependencies and remove any you find unnecessary.
+      </p>
+      <p>
+        <a href="https://github.com/utori-dev/template-react-app-prototype">
+          View the repository on GitHub to clone your own project from this
+          template!
+        </a>
+      </p>
     </Section>
 
-    <Section>
-      <H3>Useful Scripts</H3>
-      <List>
-        <ListItem>
-          <i>
-            npm run generate:icon <b>icon name</b>
-          </i>
-          <div>
-            Used to generate a React icon/svg component which will be saved to{' '}
-            <Span>./src/ui/icons/</Span>
-          </div>
-        </ListItem>
-        <ListItem>
-          <i>
-            npm run generate:emotion <b>emotion name</b>
-          </i>
-          <div>
-            Used to generate an Emotion.js template file which will be saved to{' '}
-            <Span>./src/ui/emotion/</Span>
-          </div>
-        </ListItem>
-        <ListItem>
-          <i>
-            npm run generate:component <b>component name</b>
-          </i>
-          <div>
-            Used to generate a React functional component which will be saved to{' '}
-            <Span>./src/ui/components/</Span>
-          </div>
-        </ListItem>
-        <ListItem>
-          <i>
-            npm run generate:view <b>view name</b>
-          </i>
-          <div>
-            Used to generate a React functional component which will be saved to{' '}
-            <Span>./src/views/</Span>
-          </div>
-        </ListItem>
-      </List>
+    <Section header="Useful Scripts">
+      <ScriptList>
+        <ScriptListItem command="npm run generate:icon <ICON_NAME>">
+          Used to generate a React icon/svg component which will be saved to{' '}
+          <code>./src/ui/icons/</code>
+        </ScriptListItem>
+        <ScriptListItem command="npm run generate:emotion <STYLESET_NAME>">
+          Used to generate an Emotion.js template file which will be saved to{' '}
+          <code>./src/ui/emotion/</code>
+        </ScriptListItem>
+        <ScriptListItem command="npm run generate:component <COMPONENT_NAME>">
+          Used to generate a React functional component which will be saved to{' '}
+          <code>./src/ui/components/</code>
+        </ScriptListItem>
+        <ScriptListItem command="npm run generate:view <VIEW_NAME>">
+          Used to generate a React functional component which will be saved to{' '}
+          <code>./src/views/</code>
+        </ScriptListItem>
+      </ScriptList>
     </Section>
   </div>
 );
