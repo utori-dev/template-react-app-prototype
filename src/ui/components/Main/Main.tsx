@@ -56,105 +56,104 @@ export type MainProps = React.HTMLAttributes<HTMLDivElement>;
  * @param props
  * @returns
  */
-const Main: React.FC<MainProps> = (props) => {
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        position: relative;
-        padding: var(--p--xl);
-        overflow: auto;
-        color: inherit;
-        background: transparent;
-      `}
-    >
-      <Section>
-        <h2
-          css={css`
-            text-align: center;
-          `}
-        >
-          Utori dev
-        </h2>
-        <UtoriLogoIcon
-          xmlnsXlink="http://www.w3.org/1999/xlink"
-          version="1.1"
-          width="200"
-          height="200"
-          fill="#4898da"
-          stroke="none"
-          viewBox="0 0 100 100"
-        />
-      </Section>
+const Main: React.FC<MainProps> = (props) => (
+  <div
+    {...props}
+    css={css`
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+      position: relative;
+      padding: var(--p--xl);
+      overflow: auto;
+      color: inherit;
+      background: transparent;
+    `}
+  >
+    <Section>
+      <h2
+        css={css`
+          text-align: center;
+        `}
+      >
+        Utori dev
+      </h2>
+      <UtoriLogoIcon
+        xmlnsXlink="http://www.w3.org/1999/xlink"
+        version="1.1"
+        width="200"
+        height="200"
+        fill="#4898da"
+        stroke="none"
+        viewBox="0 0 100 100"
+      />
+    </Section>
 
-      <Section>
-        <H3>Purpose</H3>
-        <TextContainer>
-          <Paragraph>
-            Starter React app with TypeScript and several helpful dependencies.
-          </Paragraph>
-          <Paragraph>
-            This template is ideal for prototypes, but includes more
-            dependencies that are likely needed for your individual use case.
-            It's a good idea to review these dependencies and remove any you
-            find unnecessary. This template is quite restrictive to encourage
-            good practices, even while prototyping. Feel free to remove these
-            restrictions if you decide they are unnecessary.
-          </Paragraph>
-          <Paragraph>
-            The repository can be viewed here:
-            <a href="https://github.com/utori-dev/template-react-app-prototype">
-              GitHub Repo
-            </a>
-          </Paragraph>
-        </TextContainer>
-      </Section>
+    <Section>
+      <H3>Purpose</H3>
+      <TextContainer>
+        <Paragraph>
+          Starter React app with TypeScript and several helpful dependencies.
+        </Paragraph>
+        <Paragraph>
+          This template is ideal for prototypes, but includes more dependencies
+          that are likely needed for your individual use case. It is a good idea
+          to review these dependencies and remove any you find unnecessary. This
+          template is quite restrictive to encourage good practices, even while
+          prototyping. Feel free to remove these restrictions if you decide they
+          are unnecessary.
+        </Paragraph>
+        <Paragraph>
+          The repository can be viewed here:
+          <a href="https://github.com/utori-dev/template-react-app-prototype">
+            GitHub Repo
+          </a>
+        </Paragraph>
+      </TextContainer>
+    </Section>
 
-      <Section>
-        <H3>Useful Scripts</H3>
-        <List>
-          <ListItem>
-            <i>
-              npm run generate:icon <b>icon name</b>
-            </i>
-            <div>
-              Used to generate a React icon/svg component which will be saved to{' '}
-              <Span>./src/ui/icons/</Span>
-            </div>
-          </ListItem>
-          <ListItem>
-            <i>
-              npm run generate:emotion <b>emotion name</b>
-            </i>
-            <div>
-              Used to generate an Emotion.js template file which will be saved
-              to <Span>./src/ui/emotion/</Span>
-            </div>
-          </ListItem>
-          <ListItem>
-            <i>
-              npm run generate:component <b>component name</b>
-            </i>
-            <div>
-              Used to generate a React functional component which will be saved
-              to <Span>./src/ui/components/</Span>
-            </div>
-          </ListItem>
-          <ListItem>
-            <i>
-              npm run generate:view <b>view name</b>
-            </i>
-            <div>
-              Used to generate a React functional component which will be saved
-              to <Span>./src/views/</Span>
-            </div>
-          </ListItem>
-        </List>
-      </Section>
-    </div>
-  );
-};
+    <Section>
+      <H3>Useful Scripts</H3>
+      <List>
+        <ListItem>
+          <i>
+            npm run generate:icon <b>icon name</b>
+          </i>
+          <div>
+            Used to generate a React icon/svg component which will be saved to{' '}
+            <Span>./src/ui/icons/</Span>
+          </div>
+        </ListItem>
+        <ListItem>
+          <i>
+            npm run generate:emotion <b>emotion name</b>
+          </i>
+          <div>
+            Used to generate an Emotion.js template file which will be saved to{' '}
+            <Span>./src/ui/emotion/</Span>
+          </div>
+        </ListItem>
+        <ListItem>
+          <i>
+            npm run generate:component <b>component name</b>
+          </i>
+          <div>
+            Used to generate a React functional component which will be saved to{' '}
+            <Span>./src/ui/components/</Span>
+          </div>
+        </ListItem>
+        <ListItem>
+          <i>
+            npm run generate:view <b>view name</b>
+          </i>
+          <div>
+            Used to generate a React functional component which will be saved to{' '}
+            <Span>./src/views/</Span>
+          </div>
+        </ListItem>
+      </List>
+    </Section>
+  </div>
+);
 
 export default Main;
