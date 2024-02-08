@@ -1,34 +1,50 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ThemeState } from './types';
 
-const isDarkMode = () => {
-  return window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
+const isDarkMode = () =>
+  window.matchMedia &&
+  window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-const initialThemeState: ThemeState = {
-  mode: isDarkMode() ? 'dark' : 'light',
+const getDefaultMode = () => (isDarkMode() ? 'dark' : 'light');
+
+const initialState: ThemeState = {
+  mode: getDefaultMode(),
+};
+
+type ThemeReducers = {
+  toggleMode(state: ThemeState, action: Action): ThemeState;
+  resetMode(state: ThemeState, action: Action): ThemeState;
+  setMode(
+    state: ThemeState,
+    action: PayloadAction<ThemeState['mode']>
+  ): ThemeState;
+};
+
+const getMode = (state: ThemeState) => state.mode;
+
+const setMode = (state: ThemeState, mode: ThemeState['mode']): ThemeState => {
+  if (state.mode === mode) return state;
+  return { ...state, mode };
 };
 
 /**
  * function to create an initial state and the asscociated reducers
  */
-export const themeSlice = createSlice({
+const theme = createSlice<
+  ThemeState,
+  ThemeReducers,
+  'theme',
+  { getMode: typeof getMode }
+>({
   name: 'theme',
-  initialState: { ...initialThemeState },
+  initialState: { ...initialState },
   reducers: {
-    setThemeMode: (state, action: PayloadAction<'light' | 'dark'>) => {
-      state.mode = action.payload;
-    },
-    resetThemeMode: (state) => {
-      state.mode = initialThemeState.mode;
-    },
-    toggleThemeMode: (state) => {
-      state.mode = state.mode === 'dark' ? 'light' : 'dark';
-    }
+    setMode: (state, action) => setMode(state, action.payload),
+    resetMode: (state) => setMode(state, getDefaultMode()),
+    toggleMode: (state) =>
+      setMode(state, state.mode === 'dark' ? 'light' : 'dark'),
   },
+  selectors: { getMode },
 });
 
-export const { setThemeMode, resetThemeMode, toggleThemeMode } = themeSlice.actions;
-
-export default themeSlice.reducer;
+export default theme;

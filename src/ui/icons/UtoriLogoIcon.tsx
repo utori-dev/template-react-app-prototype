@@ -62,7 +62,7 @@ const UtoriLogoIcon: React.FC<UtoriLogoIconProps> = (props) => {
         css={css`
           animation: ${flicker} 6s linear 3s infinite;
         `}
-      ></path>
+      />
     </svg>
   );
 };

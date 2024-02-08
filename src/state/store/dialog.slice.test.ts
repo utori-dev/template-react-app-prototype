@@ -1,8 +1,9 @@
 import store from './_store';
-import { dialogOpen, dialogClose } from './dialog.slice';
+import dialog from './dialog.slice';
+import { DialogKey } from './types';
 
-describe('Dialog state tests', () => {
-  it('Should be initialized with state', () => {
+describe('store/dialog', () => {
+  it('should be initialized with state', () => {
     // Arrange
     const state = store.getState().dialog;
 
@@ -10,52 +11,58 @@ describe('Dialog state tests', () => {
     expect(state).toBeNull();
   });
 
-  it('Should be return dialog data', () => {
+  it('should be return dialog data', () => {
     // Arrange
     const payload = {
-      key: '123',
-      data: 'foo',
+      key: DialogKey.CREDITS,
+      data: {},
     };
-    const result = {
-      type: 'dialog/dialogOpen',
-      payload: { key: '123', data: 'foo' },
+    const expected = {
+      type: 'dialog/open',
+      payload,
     };
 
     // Act
-    const testResult = store.dispatch(dialogOpen(payload));
+    const result = store.dispatch(dialog.actions.open(payload));
 
     // Assert
-    expect(testResult).toEqual(result);
+    expect(result).toEqual(expected);
+    expect(store.getState().dialog).toEqual(payload);
   });
 
   it('Should return state if payload === state', () => {
     // Arrange
-    const payload = { key: '123', data: 'foo' };
-    const result = {
-      type: 'dialog/dialogOpen',
+    const payload = {
+      key: DialogKey.CREDITS,
+      data: {},
+    };
+    store.dispatch(dialog.actions.open(payload));
+    const state = store.getState().dialog;
+    const expected = {
+      type: 'dialog/open',
       payload: store.getState().dialog,
     };
 
     // Act
-    const testResult = store.dispatch(dialogOpen(payload));
+    const result = store.dispatch(dialog.actions.open(payload));
 
     // Assert
-    expect(testResult).toEqual(result);
+    expect(result).toEqual(expected);
+    expect(store.getState().dialog).toBe(state);
   });
 
-  it('Should return null on dialogClose call', () => {
+  it('Should return correct action on dialog/close call', () => {
     // Arrange
-    const payload = null;
-    const result = {
-      type: 'dialog/dialogClose',
-      payload: null,
+    const expected = {
+      type: 'dialog/close',
+      payload: undefined,
     };
 
     // Act
-    const testResult = store.dispatch(dialogClose(payload));
+    const result = store.dispatch(dialog.actions.close());
 
     // Assert
-    expect(testResult).toEqual(result);
+    expect(result).toEqual(expected);
+    expect(store.getState().dialog).toBeNull();
   });
 });
-

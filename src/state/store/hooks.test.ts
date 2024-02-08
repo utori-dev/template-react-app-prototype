@@ -37,7 +37,7 @@ describe('data/store/hooks', () => {
   describe('useDialogIsOpen', () => {
     it('should return whether specified dialog is currently open', () => {
       // Arrange
-      const key = 'foo' as DialogKey;
+      const key = DialogKey.CREDITS;
       const data = { hello: 'world' };
 
       // Act

@@ -32,14 +32,17 @@ describe('data/store/actions', () => {
   describe('openDialog', () => {
     it('should dispatch action to open dialog', () => {
       // Arrange
-      const dialog = { key: 'foo' as DialogKey, data: { foo: 'test', bar: 123 } };
+      const dialog = {
+        key: 'foo' as DialogKey,
+        data: { foo: 'test', bar: 123 },
+      };
 
       // Act
       openDialogAction(dialog);
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'dialog/dialogOpen',
+        type: 'dialog/open',
         payload: dialog,
       });
     });
@@ -58,7 +61,7 @@ describe('data/store/actions', () => {
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'dialog/dialogOpen',
+        type: 'dialog/open',
         payload: dialog,
       });
     });
@@ -71,7 +74,7 @@ describe('data/store/actions', () => {
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/toggleThemeMode',
+        type: 'theme/toggleMode',
         payload: undefined,
       });
     });
@@ -84,7 +87,7 @@ describe('data/store/actions', () => {
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/resetThemeMode',
+        type: 'theme/resetMode',
         payload: undefined,
       });
     });
@@ -97,7 +100,7 @@ describe('data/store/actions', () => {
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
-        type: 'theme/setThemeMode',
+        type: 'theme/setMode',
         payload: 'light',
       });
     });
