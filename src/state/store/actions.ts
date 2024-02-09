@@ -1,8 +1,7 @@
 // Actions are bound to the store to avoid Redux-specific concerns outside the module.
-import store from './_store';
-import { DialogKey, DialogStateOpen, ThemeState } from './types';
-import theme from './theme.slice';
-import dialog from './dialog.slice';
+import store from './store';
+import theme, { ThemeState } from './theme.slice';
+import dialog, { DialogKey, DialogStateOpen } from './dialog.slice';
 
 export function closeDialogAction(): void {
   store.dispatch(dialog.actions.close());

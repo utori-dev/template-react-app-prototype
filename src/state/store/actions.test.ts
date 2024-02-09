@@ -1,4 +1,4 @@
-import store from './_store';
+import store from './store';
 import {
   closeDialogAction,
   openDialogAction,
@@ -7,7 +7,7 @@ import {
   setThemeModeAction,
   toggleThemeModeAction,
 } from './actions';
-import { DialogKey } from './types';
+import { DialogKey } from './dialog.slice';
 
 jest.mock('./_store.ts', () => ({
   __esModule: true,

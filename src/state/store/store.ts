@@ -1,10 +1,16 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { AppState } from './types';
 
-import theme from './theme.slice';
-import dialog from './dialog.slice';
+import theme, { ThemeState } from './theme.slice';
+import dialog, { DialogState } from './dialog.slice';
+
+export type AppState = {
+  persisted: {
+    theme: ThemeState;
+  };
+  dialog: DialogState;
+};
 
 const SetTransform = createTransform(
   /**

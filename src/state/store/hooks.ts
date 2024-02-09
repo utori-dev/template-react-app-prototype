@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Selector } from '@reduxjs/toolkit';
 import { isEqual as isDeepEqual } from 'lodash';
-import { AppState, DialogKey, EqualityChecker } from './types';
-import store from './_store';
-import dialog from './dialog.slice';
+import store, { AppState } from './store';
+import dialog, { DialogKey } from './dialog.slice';
 import theme from './theme.slice';
+
+export type EqualityChecker<T> = (a: T, b: T) => boolean;
 
 function useSelector<T>(
   selector: Selector<AppState, T>,

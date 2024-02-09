@@ -1,5 +1,8 @@
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ThemeState } from './types';
+
+export interface ThemeState {
+  mode: 'light' | 'dark';
+}
 
 const isDarkMode = () =>
   window.matchMedia &&

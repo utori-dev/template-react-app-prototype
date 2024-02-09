@@ -1,6 +1,5 @@
-import store from './_store';
-import dialog from './dialog.slice';
-import { DialogKey } from './types';
+import store from './store';
+import dialog, { DialogKey } from './dialog.slice';
 
 describe('store/dialog', () => {
   it('should be initialized with state', () => {
