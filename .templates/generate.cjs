@@ -239,8 +239,6 @@ require('yargs')
         pascalCase: namePascalCase,
       };
 
-      console.log(name)
-
       const templates = await loadTemplates('Slice');
 
       const directory = path.join(PACKAGE_ROOT, 'src', 'state', 'store');
