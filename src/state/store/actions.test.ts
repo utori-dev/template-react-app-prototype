@@ -9,7 +9,7 @@ import {
 } from './actions';
 import { DialogKey } from './dialog.slice';
 
-jest.mock('./_store.ts', () => ({
+jest.mock('./store.ts', () => ({
   __esModule: true,
   default: {
     dispatch: jest.fn(),
