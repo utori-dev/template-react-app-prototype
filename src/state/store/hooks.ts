@@ -28,21 +28,12 @@ function useSelector<T>(
   return value;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function createPersistedSelector<T, ARGS extends any[] = any[]>(
-  selector: Selector<AppState['persisted'], T>
-) {
-  return (state: AppState, ...args: ARGS) => selector(state.persisted, ...args);
-}
-
-const selectThemeMode = createPersistedSelector(theme.selectors.getMode);
-
 /**
  * Returns the color scheme for the current theme.
  *
  * @returns 'light' or 'dark'
  */
-export const useThemeMode = () => useSelector(selectThemeMode);
+export const useThemeMode = () => useSelector(theme.selectors.getMode);
 
 /**
  * Returns the custom data for the dialog.

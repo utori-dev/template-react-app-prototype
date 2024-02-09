@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, createTransform } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -6,9 +6,7 @@ import theme, { ThemeState } from './theme.slice';
 import dialog, { DialogState } from './dialog.slice';
 
 export type AppState = {
-  persisted: {
-    theme: ThemeState;
-  };
+  theme: ThemeState;
   dialog: DialogState;
 };
 
@@ -29,24 +27,18 @@ const SetTransform = createTransform(
   { whitelist: ['theme'] }
 );
 
-/**
- * Any reducers added to this object will be saved to local or session storage.
- * as defined in the slice config file.
- */
-const persisted = combineReducers({
-  theme: persistReducer(
-    {
-      key: theme.name,
-      storage,
-      transforms: [SetTransform],
-    },
-    theme.reducer
-  ),
-});
+const themeReducer = persistReducer(
+  {
+    key: theme.name,
+    storage,
+    transforms: [SetTransform],
+  },
+  theme.reducer
+);
 
 const store = configureStore({
   reducer: {
-    persisted,
+    theme: themeReducer,
     dialog: dialog.reducer,
   },
   middleware: (getDefaultMiddleware) =>
