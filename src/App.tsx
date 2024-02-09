@@ -3,11 +3,7 @@ import styled from '@emotion/styled';
 import clsx from 'clsx';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { text } from './ui/emotion';
-import {
-  openCreditsDialog,
-  toggleThemeModeAction,
-  useThemeMode,
-} from './state';
+import { openCreditsDialog, toggleThemeMode, useThemeMode } from './state';
 import { Button, Header, Main } from './ui/components';
 import { DarkModeIcon, InfoIcon, LightModeIcon } from './ui/icons';
 import { CreditsDialog, HomeView } from './views';
@@ -47,7 +43,7 @@ function App(): React.ReactElement | null {
           <Button
             iconOnly
             label="Toggle Light and Dark Mode"
-            onClick={toggleThemeModeAction}
+            onClick={toggleThemeMode}
             icon={mode === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
           />
           <Button

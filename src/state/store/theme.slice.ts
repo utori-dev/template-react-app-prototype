@@ -1,11 +1,14 @@
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ThemeState } from './types';
 
 const isDarkMode = () =>
   window.matchMedia &&
   window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 const getDefaultMode = () => (isDarkMode() ? 'dark' : 'light');
+
+export interface ThemeState {
+  mode: 'light' | 'dark';
+}
 
 const initialState: ThemeState = {
   mode: getDefaultMode(),

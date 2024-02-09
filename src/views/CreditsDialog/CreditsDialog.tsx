@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DialogKey, closeDialogAction, useDialogIsOpen } from '../../state';
+import { DialogKey, closeDialog, useDialogIsOpen } from '../../state';
 import Dialog from '../../ui/components/Dialog';
 
 /**
@@ -14,7 +14,7 @@ const CreditsDialog: React.FC = () => {
   const open = useDialogIsOpen(DialogKey.CREDITS);
 
   return (
-    <Dialog open={open} onClose={closeDialogAction}>
+    <Dialog open={open} onClose={closeDialog}>
       <Dialog.Title>Credits</Dialog.Title>
       <Dialog.Content>
         <p>
@@ -22,7 +22,7 @@ const CreditsDialog: React.FC = () => {
           <a href="https://github.com/chellimiller">Michelle Miller</a> and{' '}
           <a href="https://github.com/JaredBourget">Jared Bourget</a>.
         </p>
-        <p>
+        <div>
           Beyond React, we used the following libraries:
           <ul>
             <li>
@@ -44,8 +44,8 @@ const CreditsDialog: React.FC = () => {
               constructing class names.
             </li>
           </ul>
-        </p>
-        <p>
+        </div>
+        <div>
           The following libraries are also included:
           <ul>
             <li>
@@ -72,7 +72,7 @@ const CreditsDialog: React.FC = () => {
               that can be queried.
             </li>
           </ul>
-        </p>
+        </div>
         <p>
           To learn more,{' '}
           <a href="https://github.com/utori-dev/template-react-app-prototype">

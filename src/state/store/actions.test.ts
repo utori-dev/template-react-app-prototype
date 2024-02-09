@@ -1,15 +1,15 @@
-import store from './_store';
+import store from './store';
 import {
-  closeDialogAction,
-  openDialogAction,
+  closeDialog,
+  openDialog,
   openCreditsDialog,
-  resetThemeModeAction,
-  setThemeModeAction,
-  toggleThemeModeAction,
+  resetThemeMode,
+  setThemeMode,
+  toggleThemeMode,
 } from './actions';
-import { DialogKey } from './types';
+import { DialogKey } from './dialog.slice';
 
-jest.mock('./_store.ts', () => ({
+jest.mock('./store.ts', () => ({
   __esModule: true,
   default: {
     dispatch: jest.fn(),
@@ -22,7 +22,7 @@ describe('data/store/actions', () => {
   describe('closeDialog', () => {
     it('should dispatch action to close dialog', () => {
       // Act
-      closeDialogAction();
+      closeDialog();
 
       // Assert
       expect(store.dispatch).toHaveBeenCalled();
@@ -38,7 +38,7 @@ describe('data/store/actions', () => {
       };
 
       // Act
-      openDialogAction(dialog);
+      openDialog(dialog);
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
@@ -70,7 +70,7 @@ describe('data/store/actions', () => {
   describe('toggleThemeMode', () => {
     it('should dispatch action to toggle light/dark mode', () => {
       // Act
-      toggleThemeModeAction();
+      toggleThemeMode();
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
@@ -83,7 +83,7 @@ describe('data/store/actions', () => {
   describe('resetThemeMode', () => {
     it('should dispatch action to reset light/dark mode to user preference', () => {
       // Act
-      resetThemeModeAction();
+      resetThemeMode();
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({
@@ -96,7 +96,7 @@ describe('data/store/actions', () => {
   describe('setThemeMode', () => {
     it('should dispatch action to set light/dark mode to provided value', () => {
       // Act
-      setThemeModeAction('light');
+      setThemeMode('light');
 
       // Assert
       expect(store.dispatch).toHaveBeenCalledWith({

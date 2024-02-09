@@ -1,11 +1,21 @@
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { isEqual } from 'lodash';
-import {
-  AnyDialogData,
-  DialogKey,
-  DialogState,
-  DialogStateOpen,
-} from './types';
+
+export enum DialogKey {
+  CREDITS = 'credits',
+}
+
+export type AnyDialogData = Record<string, unknown>;
+
+type BaseDialogState<
+  K extends DialogKey,
+  D extends AnyDialogData = AnyDialogData
+> = { key: K; data: D };
+
+// This could be modified to be a union type for stricter type validation.
+export type DialogState = null | BaseDialogState<DialogKey.CREDITS>;
+
+export type DialogStateOpen = Exclude<DialogState, null>;
 
 const initialState: DialogState = null;
 
