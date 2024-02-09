@@ -22,7 +22,7 @@ const CreditsDialog: React.FC = () => {
           <a href="https://github.com/chellimiller">Michelle Miller</a> and{' '}
           <a href="https://github.com/JaredBourget">Jared Bourget</a>.
         </p>
-        <p>
+        <div>
           Beyond React, we used the following libraries:
           <ul>
             <li>
@@ -44,8 +44,8 @@ const CreditsDialog: React.FC = () => {
               constructing class names.
             </li>
           </ul>
-        </p>
-        <p>
+        </div>
+        <div>
           The following libraries are also included:
           <ul>
             <li>
@@ -72,7 +72,7 @@ const CreditsDialog: React.FC = () => {
               that can be queried.
             </li>
           </ul>
-        </p>
+        </div>
         <p>
           To learn more,{' '}
           <a href="https://github.com/utori-dev/template-react-app-prototype">
