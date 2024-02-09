@@ -1,6 +1,6 @@
 import { createSlice, Action } from '@reduxjs/toolkit';
 
-export type {{ name.pascalCase }}State = {};
+export interface {{ name.pascalCase }}State {};
 
 const initialState: {{ name.pascalCase }}State = {};
 
@@ -14,12 +14,6 @@ function reset(state: {{ name.pascalCase }}State): {{ name.pascalCase }}State {
 
 function exampleSelector(state: {{ name.pascalCase }}State): boolean {
   return !!state;
-}
-
-type {{ name.pascalCase }}Reducers = {
-  /**
-  * Define reducer types
-  */
 }
 
 /**
