@@ -6,7 +6,7 @@ import {
   setThemeMode,
   toggleThemeMode,
 } from './actions';
-import { DialogKey } from './types';
+import { DialogKey } from './dialog.slice';
 
 describe('data/store/hooks', () => {
   afterEach(jest.resetAllMocks);
