@@ -1,14 +1,14 @@
 import * as React from 'react';
-import * as renderer from 'react-test-renderer';
+import { render } from '@testing-library/react'
 import Header from './Header';
 
 describe('Header', () => {
   // Dummy test to get you started
   it('should render without errors', () => {
     // Act
-    const tree = renderer.create(<Header />).toJSON();
+    const { container } = render(<Header />);
 
     // Assert
-    expect(tree).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });
