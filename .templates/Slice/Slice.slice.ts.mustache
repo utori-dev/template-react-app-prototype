@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+type {{ name.pascalCase }}Reducers = {
+  /**
+  * Define reducer types
+  */
+}
+
 /**
  * {{ description }}
  *
  */
-export const {{ name.camelCase }}Slice = createSlice({
+export const {{ name.camelCase }} = createSlice({
   name: '{{ name.camelCase }}',
   initialState: {
     /**
@@ -23,6 +29,4 @@ export const {{ name.camelCase }}Slice = createSlice({
   }
 });
 
-export const { /* export reducer actions */} = {{ name.camelCase }}Slice.actions;
-
-export default {{ name.camelCase }}Slice.reducer;
+export default {{ name.camelCase }};
