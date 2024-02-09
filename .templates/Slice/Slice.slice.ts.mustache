@@ -1,23 +1,35 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Action } from '@reduxjs/toolkit';
+
+export type {{ name.pascalCase }}State = {};
+
+const initialState: {{ name.pascalCase }}State = {};
+
+type {{ name.pascalCase }}Reducers = {
+  reset(state: {{ name.pascalCase }}State, action: Action): {{ name.pascalCase }}State;
+};
+
+function reset(state: {{ name.pascalCase }}State): {{ name.pascalCase }}State {
+  return initialState;
+}
+
+function exampleSelector(state: {{ name.pascalCase }}State): boolean {
+  return !!state;
+}
 
 /**
  * {{ description }}
  *
  */
-export const {{ name.camelCase }}Slice = createSlice({
+export const {{ name.camelCase }} = createSlice<
+  {{ name.pascalCase }}State,
+  {{ name.pascalCase }}Reducers,
+  '{{ name.camelCase }}',
+  { example: typeof exampleSelector }
+>({
   name: '{{ name.camelCase }}',
-  initialState: {
-    /**
-    * set the initial state
-    */
-  },
-  reducers: {
-    /**
-    * Add reducers actions here
-    */
-  },
+  initialState,
+  reducers: { reset },
+  selectors: { example: exampleSelector },
 });
 
-export const { /* export reducer actions */} = {{ name.camelCase }}Slice.actions;
-
-export default {{ name.camelCase }}Slice.reducer;
+export default {{ name.camelCase }};
