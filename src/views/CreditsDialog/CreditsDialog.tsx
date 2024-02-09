@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DialogKey, closeDialogAction, useDialogIsOpen } from '../../state';
+import { DialogKey, closeDialog, useDialogIsOpen } from '../../state';
 import Dialog from '../../ui/components/Dialog';
 
 /**
@@ -14,7 +14,7 @@ const CreditsDialog: React.FC = () => {
   const open = useDialogIsOpen(DialogKey.CREDITS);
 
   return (
-    <Dialog open={open} onClose={closeDialogAction}>
+    <Dialog open={open} onClose={closeDialog}>
       <Dialog.Title>Credits</Dialog.Title>
       <Dialog.Content>
         <p>

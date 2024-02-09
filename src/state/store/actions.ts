@@ -3,26 +3,26 @@ import store from './store';
 import theme, { ThemeState } from './theme.slice';
 import dialog, { DialogKey, DialogStateOpen } from './dialog.slice';
 
-export function closeDialogAction(): void {
+export function closeDialog(): void {
   store.dispatch(dialog.actions.close());
 }
 
-export function openDialogAction(payload: DialogStateOpen): void {
+export function openDialog(payload: DialogStateOpen): void {
   store.dispatch(dialog.actions.open(payload));
 }
 
 export function openCreditsDialog(): void {
-  openDialogAction({ key: DialogKey.CREDITS, data: {} });
+  openDialog({ key: DialogKey.CREDITS, data: {} });
 }
 
-export function toggleThemeModeAction(): void {
+export function toggleThemeMode(): void {
   store.dispatch(theme.actions.toggleMode());
 }
 
-export function resetThemeModeAction(): void {
+export function resetThemeMode(): void {
   store.dispatch(theme.actions.resetMode());
 }
 
-export function setThemeModeAction(mode: ThemeState['mode']): void {
+export function setThemeMode(mode: ThemeState['mode']): void {
   store.dispatch(theme.actions.setMode(mode));
 }
