@@ -48,7 +48,7 @@ const ScriptList = styled.ul`
   padding: 0;
 `;
 
-const ScriptListItem: React.FC<{
+export const ScriptListItem: React.FC<{
   command: string;
   notes?: React.ReactNode[];
   children: React.ReactNode;

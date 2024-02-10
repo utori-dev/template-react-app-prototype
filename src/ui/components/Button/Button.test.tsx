@@ -1,14 +1,14 @@
 import * as React from 'react';
-import * as renderer from 'react-test-renderer';
+import { render } from '@testing-library/react'
 import Button from './Button';
 
 describe('Button', () => {
   // Dummy test to get you started
   it('should render without errors', () => {
     // Act
-    const tree = renderer.create(<Button label="hello" />).toJSON();
+    const { container } = render(<Button label="hello" />);
 
     // Assert
-    expect(tree).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });

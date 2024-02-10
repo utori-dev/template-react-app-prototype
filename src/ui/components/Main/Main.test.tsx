@@ -1,14 +1,14 @@
 import * as React from 'react';
-import * as renderer from 'react-test-renderer';
+import { render } from '@testing-library/react'
 import Main from './Main';
 
 describe('Main', () => {
   // Dummy test to get you started
   it('should render without errors', () => {
     // Act
-    const tree = renderer.create(<Main />).toJSON();
+    const { container } = render(<Main />);
 
     // Assert
-    expect(tree).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 });
