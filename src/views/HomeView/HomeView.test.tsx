@@ -5,10 +5,10 @@ import HomeView, { ScriptListItem } from './HomeView';
 describe('HomeView', () => {
   it('should render without errors', () => {
     // Act
-    const tree = render(<HomeView />);
+    const { container } = render(<HomeView />);
 
     // Assert
-    expect(tree).toBeTruthy();
+    expect(container).toBeTruthy();
   });
 
   describe('ScriptListItem', () => {
@@ -31,7 +31,7 @@ describe('HomeView', () => {
       // Act
       render(
         <ScriptListItem
-          notes={[<div data-testid="list-item-test"></div>]}
+          notes={[<div data-testid="list-item-test" />]}
           command="npm run generate:view <VIEW_NAME>"
         >
           <div>Script</div>
