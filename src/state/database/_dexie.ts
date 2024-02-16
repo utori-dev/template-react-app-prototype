@@ -5,7 +5,7 @@ class DexieDatabase extends Dexie {
   entities!: Table<Entity, Entity['id']>;
 
   constructor() {
-    super('color-builder');
+    super('utori-dev--react-app-prototype');
     this.version(1).stores({
       entities: '++id',
     });
