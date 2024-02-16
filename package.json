@@ -16,7 +16,8 @@
     "lint": "eslint src/** --ext .js,.jsx,.ts,.tsx",
     "start": "webpack serve --mode development",
     "start:production": "webpack serve --mode production",
-    "test": "jest"
+    "test": "jest",
+    "setup": "node ./.scripts/setup.cjs"
   },
   "author": {
     "name": "Michelle Miller",

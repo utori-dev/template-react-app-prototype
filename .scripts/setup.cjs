@@ -3,38 +3,26 @@
 const Mustache = require('mustache');
 const fs = require('fs/promises');
 const path = require('path');
-const {
-  words,
-  capitalize,
-  kebabCase: toKebabCase,
-  camelCase: toCamelCase,
-} = require('lodash');
-
 const ROOT = path.dirname(__dirname);
 const SRC = path.join(ROOT, 'src');
 const PUBLIC = path.join(ROOT, 'public');
 
 /**
- * - [ ] README generator
- * - [ ] Database file
- * - [ ] Manifest
- * - [ ] Index file
- * - [ ] License
- * - [ ] App name
- * - [ ] package.json -> Run npm i
- */
-
-/**
- * @typedef {SetupOptions}
+ * @typedef {Object} FileTransformer
+ * @property {string} path
+ * @property {'template' | 'json' | 'text'} type
+ * @property {string} template
+ * @property {Function} handler
+ *
+ * @typedef {Object} SetupOptions
  * @property {string} title
  * @property {string} shortName
  * @property {string} description
  * @property {string} databaseName
  * @property {number} copyrightYear
- * @property {object} author
- * @property {string} author.name
- * @property {string} author.email
- * @property {string} author.url
+ * @property {string} authorName
+ * @property {string} authorEmail
+ * @property {string} authorUrl
  * @property {string} packageName
  * @property {string} themeColor
  * @property {string} githubUrl
@@ -47,232 +35,282 @@ const DEFAULT_OPTIONS = {
   shortName: 'Prototype',
   description: 'Template for creating prototypes with React',
   copyrightYear: new Date().getFullYear(),
-  author: {
-    name: 'Michelle Miller',
-    email: 'michelle@utori.dev',
-    url: 'https://github.com/chellimiller',
-  },
+  authorName: 'Michelle Miller',
+  authorEmail: 'michelle@utori.dev',
+  authorUrl: 'https://github.com/chellimiller',
   packageName: '@utori-dev/template-react-app-prototype',
   themeColor: '#4898da',
   githubUrl: 'https://github.com/utori-dev/template-react-app-prototype',
 };
 
+async function loadFileContent(filePath) {
+  return fs.readFile(filePath, { encoding: 'utf-8' });
+}
+
 /**
- * @typedef {FileConfiguration}
- * @property {string} path
- * @property {string | undefined} template Path to the template, should not be included with replace or removeKeys.
- * @property {Array<keyof SetupOptions> | undefined} replace Strings to replace, should not be used with template.
- * @property {Array<string>} removeKeys Keys to remove, only applies to JSON files
  *
- * @type {Record<string, FileConfiguration>}
+ * @param {FileTransformer} transformer
+ * @param {SetupOptions} options
+ * @returns {Promise<string>}
  */
-const locations = {
-  readme: {
+async function transformTemplateFile(transformer, options) {
+  const templateFile = `${transformer.template}.mustache`;
+  const template = await loadFileContent(path.join(__dirname, templateFile));
+  return Mustache.render(template, options);
+}
+
+/**
+ *
+ * @param {FileTransformer} transformer
+ * @param {SetupOptions} options
+ * @returns {Promise<string>}
+ */
+async function transformJsonFile(transformer, options) {
+  const text = await loadFileContent(transformer.path);
+  const json = await transformer.handler({
+    content: JSON.parse(text),
+    options,
+  });
+  return JSON.stringify(json, null, 2);
+}
+
+/**
+ *
+ * @param {FileTransformer} transformer
+ * @param {SetupOptions} options
+ * @returns {Promise<string>}
+ */
+async function transformTextFile(transformer, options) {
+  const content = await loadFileContent(transformer.path);
+  return await transformer.handler({
+    content,
+    options,
+  });
+}
+
+/**
+ *
+ * @param {FileTransformer} transformer
+ * @param {SetupOptions} options
+ * @returns {Promise<string>}
+ */
+async function transformFile(transformer, options) {
+  switch (transformer.type) {
+    case 'template':
+      return transformTemplateFile(transformer, options);
+    case 'json':
+      return transformJsonFile(transformer, options);
+    case 'text':
+      return transformTextFile(transformer, options);
+    default:
+      throw new Error(`Invalid transformer type "${transformer.type}"`);
+  }
+}
+
+/** *
+ *
+ * @type {Record<string, FileTransformer>}
+ */
+const TRANSFORMERS = {
+  README: {
     path: path.join(ROOT, 'README.md'),
-    template: path.join(__dirname, 'README.md.mustache'),
+    type: 'template',
+    template: 'README.md',
   },
-  license: {
+  LICENSE: {
     path: path.join(ROOT, 'LICENSE'),
-    template: path.join(__dirname, 'LICENSE.mustache'),
+    type: 'template',
+    template: 'LICENSE',
   },
-  package: {
+  packageJson: {
     path: path.join(ROOT, 'package.json'),
-    replace: ['title', 'shortName', 'description', 'themeColor'],
-    replace: ['title', 'shortName', 'description', 'themeColor'],
+    type: 'json',
+    handler: async ({ content, options }) => {
+      const {
+        authorEmail = '',
+        authorName,
+        authorUrl = '',
+        packageName,
+        description,
+        githubUrl,
+      } = options;
+
+      delete content.maintainers;
+      content.author =
+        authorEmail && authorUrl
+          ? {
+              name: authorName,
+              email: authorEmail,
+              url: authorUrl,
+            }
+          : [
+              authorName,
+              authorEmail && `<${authorEmail}>`,
+              authorUrl && `(${authorUrl})`,
+            ]
+              .filter((item) => !item)
+              .join(' ');
+      content.name = packageName;
+      content.description = description;
+      content.repository.url = content.repository.url.replace(
+        DEFAULT_OPTIONS.githubUrl,
+        githubUrl
+      );
+      content.bugs.url = content.bugs.url.replace(
+        DEFAULT_OPTIONS.githubUrl,
+        githubUrl
+      );
+      content.homepage = content.homepage.replace(
+        DEFAULT_OPTIONS.githubUrl,
+        githubUrl
+      );
+
+      return content;
+    },
   },
-  index: {
-    path: path.join(PUBLIC, 'index.html'),
-    replace: ['shortName', 'description', 'themeColor'],
-  },
-  manifest: {
+  manifestJson: {
     path: path.join(PUBLIC, 'manifest.json'),
-    replace: ['title', 'shortName', 'description', 'themeColor'],
+    type: 'json',
+    handler: async ({ content, options }) => {
+      const { title, shortName, themeColor, description } = options;
+
+      content.name = title;
+      content.short_name = shortName;
+      content.theme_color = themeColor;
+      content.description = description;
+
+      return content;
+    },
   },
-  appRoot: {
-    path: path.join(SRC, 'App.tsx'),
-    replace: ['description', 'githubUrl', 'author'],
-    removeKeys: ['maintainers'],
+  indexHtml: {
+    path: path.join(PUBLIC, 'index.html'),
+    type: 'text',
+    handler: async ({ content, options }) => {
+      const { title, shortName, themeColor, description } = options;
+
+      return content
+        .replace(DEFAULT_OPTIONS.title, title)
+        .replace(DEFAULT_OPTIONS.shortName, shortName)
+        .replace(DEFAULT_OPTIONS.description, description)
+        .replace(DEFAULT_OPTIONS.themeColor, themeColor);
+    },
   },
-  database: {
+  databaseFile: {
     path: path.join(SRC, 'state', 'database', '_dexie.ts'),
-    replace: ['databaseName'],
+    type: 'text',
+    handler: async ({ content, options }) => {
+      const { databaseName } = options;
+      return content.replace(DEFAULT_OPTIONS.databaseName, databaseName);
+    },
+  },
+  appRootFile: {
+    path: path.join(SRC, 'App.tsx'),
+    type: 'text',
+    handler: async ({ content, options }) => {
+      const { title } = options;
+      return content.replace(DEFAULT_OPTIONS.title, title);
+    },
   },
 };
 
-/**
- * Converts a string value to PascalCase.
- *
- * @param {string} value
- * @returns {string}
- */
-function toPascalCase(value) {
-  return words(value).map(capitalize).join('');
-}
-
-/**
- * Converts a string value to PascalCase and appends `*View` if it's not already appended.
- *
- * @param {string} value
- * @returns {string}
- */
-function toViewName(value) {
-  const pascalCase = toPascalCase(value);
-  return pascalCase.endsWith('View') | pascalCase.endsWith('Dialog')
-    ? pascalCase
-    : `${pascalCase}View`;
-}
-
-/**
- * Converts a string value to PascalCase and appends `*Icon` if it's not already appended.
- *
- * @param {string} value
- * @returns {string}
- */
-function toIconName(value) {
-  const pascalCase = toPascalCase(value);
-  return pascalCase.endsWith('Icon') ? pascalCase : `${pascalCase}Icon`;
-}
-
-/**
- * Generates an index file for the specified directory.
- *
- * @param {string} directory
- * @param {object} options
- * @param {boolean} options.defaultExportOnly
- * @returns {Promise<void>}
- */
-async function generateIndexFile(directory, options = {}) {
-  const { defaultExportOnly = false } = options;
-
-  const items = await fs.readdir(directory, {
-    withFileTypes: true,
-  });
-
-  const filteredItems = items.filter((item) => {
-    if (item.name.startsWith('index.ts')) return false;
-    if (item.name.includes('.test.')) return false;
-    if (item.name.startsWith('_')) return false;
-    return true;
-  });
-
-  const exports = await Promise.all(
-    filteredItems.map((item) => {
-      const exportName = path.parse(item.name).name;
-      const defaultExport = `export { default as ${exportName} } from './${exportName}';`;
-
-      if (defaultExportOnly) return defaultExport;
-      return [`export * from './${exportName}';`, defaultExport].join('\n');
-    })
-  );
-
-  const content = ['// AUTO-GENERATED, DO NOT EDIT', '', ...exports, ''].join(
-    '\n'
-  );
-
-  return fs.writeFile(path.join(directory, 'index.ts'), content, {
-    encoding: 'utf-8',
-  });
-}
-
-/**
- * Loads the specified template.
- * Ignores sub-directories within the template.
- *
- * @param {string} name
- * @returns {Promise<{ name: string, content: string }[]>}
- */
-async function loadTemplates(name) {
-  const directory = path.join(__dirname, name);
-  const files = (
-    await fs.readdir(directory, {
-      withFileTypes: true,
-    })
-  ).filter((item) => item.isFile());
-
-  const templates = await Promise.all(
-    files.map((file) =>
-      fs
-        .readFile(path.join(directory, file.name), { encoding: 'utf-8' })
-        .then((content) => ({ name: file.name, content }))
-    )
-  );
-
-  return templates;
-}
-
 require('yargs')
-  .scriptName('generate')
+  .scriptName('setup')
   .usage('$0 <cmd> [args]')
-  .command('setup', 'Runs setup script for the tool', {
+  .command('$0', 'Runs setup script for the tool', {
     builder: (yargs) => {
-      yargs.option('name', {
-        describe: 'The name of the new project.',
+      yargs.option('title', {
+        describe: 'The title of the new project.',
         type: 'string',
         require: true,
       });
       yargs.option('description', {
         describe: 'Description of the new project.',
         type: 'string',
-        require: true,
         default: '@todo Add description',
       });
       yargs.option('short-name', {
         describe: 'The short name of the new project. Used in the manifest.',
+        alias: 'sn',
         type: 'string',
-        default: '@todo Add short name',
+        default: DEFAULT_OPTIONS.shortName,
       });
-      yargs.option('package', {
+      yargs.option('package-name', {
         describe:
           'The name of the package. Include @organization prefix if applicable.',
+        alias: 'p',
         type: 'string',
         require: true,
       });
-      yargs.option('repository', {
-        describe: 'URL for the repository.',
-        alias: 'r',
+      yargs.option('github-url', {
+        describe: 'URL for the GitHub repository.',
+        alias: 'g',
         type: 'string',
         require: true,
       });
-      yargs.option('database', {
+      yargs.option('database-name', {
         describe: 'Name for the Dexie database',
         alias: 'db',
         type: 'string',
+      });
+      yargs.option('author-name', {
+        describe: 'Name of the repository author',
+        alias: 'an',
+        type: 'string',
+        require: true,
+      });
+      yargs.option('author-email', {
+        describe: 'Email of the repository author',
+        alias: 'ae',
+        type: 'string',
         require: false,
+      });
+      yargs.option('author-url', {
+        describe: 'URL of the author',
+        alias: 'au',
+        type: 'string',
+        require: false,
+      });
+      yargs.option('theme-color', {
+        describe: 'Theme color for the app. Used in manifest and index.html.',
+        type: 'string',
+        default: DEFAULT_OPTIONS.themeColor,
       });
     },
     handler: async (args) => {
-      const { name: namePascalCase, description } = args;
-      const nameKebabCase = kebabCase(namePascalCase);
+      const {
+        title,
+        description,
+        githubUrl,
+        databaseName = kebabCase(title),
+        authorName,
+        authorUrl,
+        authorEmail,
+        themeColor,
+        shortName,
+        packageName,
+      } = args;
 
-      const name = {
-        pascalCase: namePascalCase,
-        kebabCase: nameKebabCase,
+      /** @type {SetupOptions} */
+      const options = {
+        title,
+        description,
+        githubUrl,
+        databaseName,
+        authorName,
+        authorUrl,
+        authorEmail,
+        themeColor,
+        shortName,
+        packageName,
       };
 
-      const templates = await loadTemplates('Component');
-
-      const directory = path.join(ROOT, 'src', 'ui', 'components');
-      const componentPath = path.join(directory, namePascalCase);
-
-      await fs.mkdir(componentPath, { recursive: true });
-
-      await Promise.all(
-        templates.map((template) =>
-          fs.writeFile(
-            path.join(
-              componentPath,
-              template.name
-                .replace('Component', namePascalCase)
-                .replace(/\.mustache$/, '')
-            ),
-            Mustache.render(template.content, { name, description })
+      Promise.all(
+        Object.values(TRANSFORMERS).map((transformer) =>
+          transformFile(transformer, options).then(
+            async (content) => await fs.writeFile(transformer.path, content)
           )
         )
-      );
-
-      await generateIndexFile(directory);
-
-      console.log(`Successfully created ${namePascalCase}`);
+      ).then((result) => console.log(`Transformed ${result.length} files`));
     },
   })
   .demandCommand(1, 'No command was specified')
