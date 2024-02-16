@@ -12,13 +12,13 @@ const {
 
 const ROOT = path.dirname(__dirname);
 const SRC = path.join(ROOT, 'src');
+const PUBLIC = path.join(ROOT, 'public');
 
 /**
  * - [ ] README generator
  * - [ ] Database file
  * - [ ] Manifest
  * - [ ] Index file
- * - [ ] Maybe workflow
  * - [ ] License
  * - [ ] App name
  * - [ ] package.json -> Run npm i
@@ -26,27 +26,72 @@ const SRC = path.join(ROOT, 'src');
 
 /**
  * @typedef {SetupOptions}
- * @property {string} name
+ * @property {string} title
+ * @property {string} shortName
  * @property {string} description
  * @property {string} databaseName
+ * @property {number} copyrightYear
+ * @property {object} author
+ * @property {string} author.name
+ * @property {string} author.email
+ * @property {string} author.url
+ * @property {string} packageName
+ * @property {string} themeColor
+ * @property {string} githubUrl
  *
  * @type {SetupOptions}
  */
 const DEFAULT_OPTIONS = {
   databaseName: 'utori-dev--react-app-prototype',
+  title: 'React App Prototype',
+  shortName: 'Prototype',
+  description: 'Template for creating prototypes with React',
+  copyrightYear: new Date().getFullYear(),
+  author: {
+    name: 'Michelle Miller',
+    email: 'michelle@utori.dev',
+    url: 'https://github.com/chellimiller',
+  },
+  packageName: '@utori-dev/template-react-app-prototype',
+  themeColor: '#4898da',
+  githubUrl: 'https://github.com/utori-dev/template-react-app-prototype',
 };
 
 /**
  * @typedef {FileConfiguration}
  * @property {string} path
- * @property {Array<keyof SetupOptions>} replace
+ * @property {string | undefined} template Path to the template, should not be included with replace or removeKeys.
+ * @property {Array<keyof SetupOptions> | undefined} replace Strings to replace, should not be used with template.
+ * @property {Array<string>} removeKeys Keys to remove, only applies to JSON files
  *
- * @type {SetupOptions}
+ * @type {Record<string, FileConfiguration>}
  */
 const locations = {
-  reamde: {
+  readme: {
     path: path.join(ROOT, 'README.md'),
-    replace: {},
+    template: path.join(__dirname, 'README.md.mustache'),
+  },
+  license: {
+    path: path.join(ROOT, 'LICENSE'),
+    template: path.join(__dirname, 'LICENSE.mustache'),
+  },
+  package: {
+    path: path.join(ROOT, 'package.json'),
+    replace: ['title', 'shortName', 'description', 'themeColor'],
+    replace: ['title', 'shortName', 'description', 'themeColor'],
+  },
+  index: {
+    path: path.join(PUBLIC, 'index.html'),
+    replace: ['shortName', 'description', 'themeColor'],
+  },
+  manifest: {
+    path: path.join(PUBLIC, 'manifest.json'),
+    replace: ['title', 'shortName', 'description', 'themeColor'],
+  },
+  appRoot: {
+    path: path.join(SRC, 'App.tsx'),
+    replace: ['description', 'githubUrl', 'author'],
+    removeKeys: ['maintainers'],
   },
   database: {
     path: path.join(SRC, 'state', 'database', '_dexie.ts'),
