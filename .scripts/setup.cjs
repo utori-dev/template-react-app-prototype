@@ -148,7 +148,7 @@ const TRANSFORMERS = {
               authorEmail && `<${authorEmail}>`,
               authorUrl && `(${authorUrl})`,
             ]
-              .filter((item) => !item)
+              .filter((item) => !!item)
               .join(' ');
       content.name = packageName;
       content.description = description;
@@ -225,8 +225,9 @@ require('yargs')
       });
       yargs.option('description', {
         describe: 'Description of the new project.',
+        alias: 'd',
         type: 'string',
-        default: '@todo Add description',
+        require: true,
       });
       yargs.option('short-name', {
         describe: 'The short name of the new project. Used in the manifest.',
@@ -302,6 +303,7 @@ require('yargs')
         themeColor,
         shortName,
         packageName,
+        copyrightYear: DEFAULT_OPTIONS.copyrightYear,
       };
 
       Promise.all(
