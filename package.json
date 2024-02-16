@@ -1,7 +1,7 @@
 {
   "name": "@utori-dev/template-react-app-prototype",
   "version": "1.0.0",
-  "description": "Starter web app with HTML, CSS, JavaScript, and development dependencies.",
+  "description": "Template for creating prototypes with React.",
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
@@ -18,6 +18,23 @@
     "start:production": "webpack serve --mode production",
     "test": "jest"
   },
+  "author": {
+    "name": "Michelle Miller",
+    "email": "michelle@utori.dev",
+    "url": "https://github.com/chellimiller"
+  },
+  "maintainers": [
+    {
+      "name": "Michelle Miller",
+      "email": "michelle@utori.dev",
+      "url": "https://github.com/chellimiller"
+    },
+    {
+      "name": "Jared Bourget",
+      "email": "jared@utori.dev",
+      "url": "https://github.com/JaredBourget"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/utori-dev/template-react-app-prototype.git"
