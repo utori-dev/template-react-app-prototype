@@ -38,7 +38,7 @@ function App(): React.ReactElement | null {
   return (
     <AppRoot>
       <Header>
-        <Header.Title to="/">Prototype React App</Header.Title>
+        <Header.Title to="/">React App Prototype</Header.Title>
         <Header.Actions>
           <Button
             iconOnly

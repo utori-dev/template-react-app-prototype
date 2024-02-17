@@ -1,13 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "Vanilla Web App Template",
-  "short_name": "Web App",
+  "name": "React App Prototype",
+  "short_name": "Prototype",
   "start_url": ".",
   "scope": ".",
   "display": "minimal-ui",
   "background_color": "#ffffff",
   "theme_color": "#4898da",
-  "description": "Template app for creating prototypes with React",
+  "description": "Template for creating prototypes with React.",
   "icons": [
     {
       "src": "assets/logo/logo-512.png",
